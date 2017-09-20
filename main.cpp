@@ -4,125 +4,101 @@
 
 using namespace std;
 
+//Inizializzazione delle variabili.
+string name;
+string surname;
+string playerclass;
+
+//Inizializzazione delle funzioni.
+void menu();
+void play();
+void settings();
+void chooseclass();
+
+//Programma principale.
 int main(int argc, char* argv[])
 {
-    //zones
-    int menu = 1;
-    int newgame = 0;
-    int newclass = 0;
-    int summary = 0;
-    int startzone = 0;
+    system("cls");
+    menu();
+}
 
-    string name;
-    string surname;
-    string classchosen;
-    while(menu == 1){
-        gotomenu:
-            system("cls");
-            int choicemenu;
-            cout << "OpenTextRPG\n\nMain Menu\n\nChoose an option.\n\n\t1-Play\n\t2-Exit\n";
-            cin >> choicemenu;
-            if(choicemenu == 1){
-            }
-            switch (choicemenu){
+//Menu principale.
+void menu(){
+    system("cls");
+    int selection;
+    cout << "Welcome to OpenTextRPG.\n\nSelect an option.\n\n\t1-Play\n\t2-Settings\n\t3-Exit\n\n";
+    cin >> selection;
+    switch(selection){
+    case(1):
+        play();
+        break;
+    case(2):
+        settings();
+        break;
+    case(3):
+        exit(0);
+        break;
+    }
+}
 
-            case(1):
-                menu = 0;
-                newgame = 1;
-                break;
-            case(2):
-                exit(0);
-                break;
-            default:
-                exit(0);
-                break;
-            }
+//Inizio gioco, salvataggi WIP.
+void play(){
+    system("cls");
+    int selection;
+    cout << "Choose a name.\n\n";
+    cin >> name;
+    cout << "\nChoose a surname.\n\n";
+    cin >> surname;
+    cout << "\nSo, you are " << name << " " << surname << "?\n\nPress 1 for yes, 0 for no.\n\n";
+    cin >> selection;
+    switch(selection){
+    case(1):
+        chooseclass();
+        break;
+    default:
+        play();
+        break;
     }
-    while(newgame == 1){
-        gotonewgame:
-            system("cls");
-            int confirmname;
-            cout << "Choose a name\n\n";
-            cin >> name;
-            cout << "\nChoose a surname\n\n";
-            cin >> surname;
-            cout << "\nSo, you are " << name << " " << surname << "?\n\nInsert 1 for yes, 0 for No\n\n";
-            cin >> confirmname;
-            if(confirmname == 1){
-                newgame = 0;
-                newclass = 1;
-                break;
-            }else{
-                system("cls");
-                continue;
-            }
+}
 
-        }
-    while(newclass == 1){
-        gotonewclass:
-            system("cls");
-            int confirmclass;
-            int chooseclass;
-            cout << "Ok, now choose a class.\n\t1-Archer\n\t2-Knight\n\t3-Mage\n\t4-Warrior\n";
-            cin >> chooseclass;
-            switch(chooseclass){
-            case(1):
-                classchosen = "Archer";
-                break;
-            case(2):
-                classchosen = "Knight";
-                break;
-            case(3):
-                classchosen = "Mage";
-                break;
-            case(4):
-                classchosen = "Warrior";
-                break;
-            }
-            cout << "\nSo, you are " << name << " " << surname << ", the " << classchosen << "?\n\nInsert 1 for yes, 0 for no.\n\n";
-            cin >> confirmclass;
-            if(confirmclass = 1){
-                summary = 1;
-                newclass = 0;
-            }else{
-                goto gotonewclass;
-            }
+//Impostazioni, WIP.
+void settings(){
+    system("cls");
+    int selection;
+    cout << "Work in Progress\n";
+    system("PAUSE");
+    menu();
+}
+
+//Selezione della classe.
+void chooseclass(){
+    system("cls");
+    int selection;
+    cout << "Ok, now choose a class.\n\n\t1-Archer\n\t2-Knight\n\t3-Mage\n\t4-Warrior\n";
+    cin >> selection;
+    switch(selection){
+    case(1):
+        playerclass = "Archer";
+        break;
+    case(2):
+        playerclass = "Knight";
+        break;
+    case(3):
+        playerclass = "Mage";
+        break;
+    case(4):
+        playerclass = "Warrior";
+        break;
     }
-    while(summary == 1){
-        gotosummary:
-            system("cls");
-            int editsummary;
-            cout << "There is a summary of your choices\n\nName: " << name << "\nSurname: " << surname << "\nClass: " << classchosen << "\n\n";
-            cout << "Do you want to edit something?\n\t1-Name and Surname\n\t2-Class\n\t3-Go ahead\n\t4-Main Menu\n\n";
-            cin >> editsummary;
-            switch(editsummary){
-            case(1):
-                goto gotonewgame;
-                newgame = 1;
-                summary = 0;
-                break;
-            case(2):
-                goto gotonewclass;
-                newclass = 1;
-                summary = 0;
-                break;
-            case(3):
-                goto gotostartzone;
-                startzone = 1;
-                summary = 0;
-                break;
-            case(4):
-                goto gotomenu;
-                menu = 1;
-                summary = 0;
-                break;
-            }
+    int confirm;
+    cout << "\nSo, you are " << name << " " << surname << ", the " << playerclass << "?\n\nPress 1 for yes, 0 for no.\n\n";
+    cin >> confirm;
+    if(confirm == 1){
+        //WIP;
+        exit(0);
+    }else{
+        chooseclass();
     }
-    while(startzone == 1){
-        gotostartzone:
-            int finish;
-            cout << "This is a test\n";
-            cin >> finish;
-    }
+
 }
 
