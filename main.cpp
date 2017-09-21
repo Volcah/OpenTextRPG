@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <conio.h>
+#include <string>
+#include <istream>
 
 using namespace std;
 
@@ -74,9 +76,10 @@ void play(){
     system("cls");
     int selection;
     cout << "Choose a name.\n\n";
-    cin >> player.name;
+    cin.ignore();
+    getline(cin, player.name);
     cout << "\nChoose a surname.\n\n";
-    cin >> player.surname;
+    getline(cin, player.surname);
     cout << "\nSo, you are " << player.name << " " << player.surname << "?\n\nPress 1 for yes, 0 for no.\n\n";
     cin >> selection;
     switch(selection){
