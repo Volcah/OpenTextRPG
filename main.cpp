@@ -63,6 +63,9 @@ void menu(){
     case(3):
         exit(0);
         break;
+    default:
+        menu();
+        break;
     }
 }
 
@@ -125,6 +128,9 @@ void chooseclass(){
         player.hp = 50;
         player.atk = 45;
         player.mag = 10;
+        break;
+    default:
+        chooseclass();
         break;
     }
     int confirm;
@@ -267,6 +273,18 @@ void training_zone_battle(){
                         cout << dummy.name << "'s attack missed!";
                     }
                 }
+                break;
+            default:
+                enemyattack = rand()%2;
+                if(enemyattack == 1){
+                    player.hp -= dummy.atk;
+                    cout << player.name << " takes " << dummy.atk << " damage.\n";
+                    getch();
+                }else{
+                    cout << dummy.name << "'s attack missed!";
+                }
+                break;
+
             }
     }
     while(player.hp <= 0){
