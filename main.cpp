@@ -7,24 +7,38 @@
 using namespace std;
 
 //Inizializzazione delle variabili.giocatore.
-string name;
-string surname;
-string playerclass;
+struct Player{
+    string name;
+    string surname;
+    string playerclass;
+    int hp, atk, mag, level, exp;
+};
 
-//Inizializzazione delle statistiche
-int hp, atk, mag, level, exp;
+Player player;
 
+//Nemici
+struct Dummy{
+    string name = "Dummy";
+    int hp = 105;
+    int atk = 0;
+    int level = 1;
+    int exp = 15;
+};
 
-//Inizializzazione delle funzioni.
+Dummy dummy;
+
+//Inizializzazione delle zone principali.
 void menu();
 void play();
 void settings();
 void chooseclass();
 void summary();
 
-//Training zone
+//Training zones
 void training_zone_1();
 void training_zone_2();
+void training_zone_battle();
+void training_zone_finish();
 
 //Programma principale.
 int main(int argc, char* argv[])
@@ -57,10 +71,10 @@ void play(){
     system("cls");
     int selection;
     cout << "Choose a name.\n\n";
-    cin >> name;
+    cin >> player.name;
     cout << "\nChoose a surname.\n\n";
-    cin >> surname;
-    cout << "\nSo, you are " << name << " " << surname << "?\n\nPress 1 for yes, 0 for no.\n\n";
+    cin >> player.surname;
+    cout << "\nSo, you are " << player.name << " " << player.surname << "?\n\nPress 1 for yes, 0 for no.\n\n";
     cin >> selection;
     switch(selection){
     case(1):
@@ -77,7 +91,7 @@ void settings(){
     system("cls");
     int selection;
     cout << "Still Work in Progress.\n";
-    system("PAUSE");
+    cin >> selection;
     menu();
 }
 
@@ -89,20 +103,32 @@ void chooseclass(){
     cin >> selection;
     switch(selection){
     case(1):
-        playerclass = "Archer";
+        player.playerclass = "Archer";
+        player.hp = 20;
+        player.atk = 25;
+        player.mag = 10;
         break;
     case(2):
-        playerclass = "Knight";
+        player.playerclass = "Knight";
+        player.hp = 70;
+        player.atk = 25;
+        player.mag = 10;
         break;
     case(3):
-        playerclass = "Mage";
+        player.playerclass = "Mage";
+        player.hp = 30;
+        player.atk = 10;
+        player.mag = 30;
         break;
     case(4):
-        playerclass = "Warrior";
+        player.playerclass = "Warrior";
+        player.hp = 50;
+        player.atk = 45;
+        player.mag = 10;
         break;
     }
     int confirm;
-    cout << "\nSo, you are " << name << " " << surname << ", the " << playerclass << "?\n\nPress 1 for yes, 0 for no.\n\n";
+    cout << "\nSo, you are " << player.name << " " << player.surname << ", the " << player.playerclass << "?\n\nPress 1 for yes, 0 for no.\n\n";
     cin >> confirm;
     if(confirm == 1){
         summary();
@@ -116,7 +142,7 @@ void chooseclass(){
 void summary(){
     system("cls");
     int selection;
-    cout << "This is a summary of your choices\n\nName: " << name << "\nSurname: " << surname << "\nClass: " << playerclass << "\nHealth Points: " << hp << "\nAttack: " << atk << "\nMagic: " << mag << "\n\n";
+    cout << "This is a summary of your choices\n\nName: " << player.name << "\nSurname: " << player.surname << "\nClass: " << player.playerclass << "\nHealth Points: " << player.hp << "\nAttack: " << player.atk << "\nMagic: " << player.mag << "\n\n";
     cout << "Do you want to edit something?\n\t1-Name and Surname\n\t2-Class\n\t3-Go ahead\n\t4-Main Menu\n\n";
     cin >> selection;
     switch(selection){
@@ -175,5 +201,88 @@ void training_zone_1(){
 }
 
 void training_zone_2(){
-    cout << "Work in progress";
+    system("cls");
+    int selection;
+    cout << "Trainer:\nThis is a dummy, you can use it when you want to train your combat skills.\n";
+    cout << "When you're ready, press 1 to start the battle, or press 0 to go back.\n";
+    cin >> selection;
+    if(selection == 1){
+        training_zone_battle();
+    }else{
+        training_zone_1();
+    }
+}
+
+void training_zone_battle(){
+    system("cls");
+    cout << dummy.name << " appears!";
+    getch();
+    while(dummy.hp > 0 & player.hp > 0){
+            system("cls");
+            int selection;
+            cout << player.name << "'s life= " << player.hp << "\n" << dummy.name << "'s life= " << dummy.hp << "\n\n";
+            cout << "What do you want to do?\n\t";
+            cout << "1-Attack\n\t2-Magic\n\t3-Escape\n\n";
+            cin >> selection;
+            int enemyattack;
+            int escape;
+            switch(selection){
+            case(1):
+                dummy.hp -= player.atk;
+                cout << dummy.name << " takes " << player.atk << " damage.\n";
+                enemyattack = rand()%2;
+                if(enemyattack == 1){
+                    player.hp -= dummy.atk;
+                    cout << player.name << " takes " << dummy.atk << " damage.\n";
+                    getch();
+                }else{
+                    cout << dummy.name << "'s attack missed!";
+                }
+                break;
+            case(2):
+                dummy.hp -= player.mag;
+                cout << dummy.name << " takes " << player.mag << " damage.\n";
+                enemyattack = rand()%2;
+                if(enemyattack == 1){
+                    player.hp -= dummy.atk;
+                    cout << player.name << " takes " << dummy.atk << " damage.\n";
+                    getch();
+                }else{
+                    cout << dummy.name << "\n's attack missed!";
+                }
+                break;
+            case(3):
+                escape = rand()%2;
+                if(escape == 1){
+                    cout << "You successfully escaped.\n";
+                    getch();
+                    training_zone_finish();
+                }else{
+                    enemyattack = rand()%2;
+                    if(enemyattack == 1){
+                        player.hp -= dummy.atk;
+                        cout << player.name << " takes " << dummy.atk << " damage.\n";
+                        getch();
+                    }else{
+                        cout << dummy.name << "'s attack missed!";
+                    }
+                }
+            }
+    }
+    while(player.hp <= 0){
+
+            cout << player.name << "dies.\n";
+            cout << "Game Over, HOW did you arrive here?";
+            getch();
+            training_zone_battle();
+    }
+    training_zone_finish();
+
+}
+
+void training_zone_finish(){
+    system("cls");
+    cout << "Congratulations, you finished the alpha. Here's a virtual cup for you.\n";
+    getch();
+    exit(0);
 }
