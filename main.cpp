@@ -92,9 +92,8 @@ void play(){
 //Impostazioni, WIP.
 void settings(){
     system("cls");
-    int selection;
     cout << "Still Work in Progress.\n";
-    cin >> selection;
+    getch();
     menu();
 }
 
