@@ -13,10 +13,14 @@ struct Player{
     string name;
     string surname;
     string playerclass;
-    int hp, atk, mag, level, exp;
+    int hp, atk, mag, exp;
+    int level = 1;
+    int nextlevel = 15;
 };
 
 Player player;
+
+
 
 //Nemici
 struct Dummy{
@@ -35,6 +39,8 @@ void play();
 void settings();
 void chooseclass();
 void summary();
+void statistics();
+void playerup();
 
 //Training zones
 void training_zone_1();
@@ -223,7 +229,7 @@ void training_zone_2(){
 
 void training_zone_battle(){
     system("cls");
-    cout << dummy.name << " appears!";
+    cout << dummy.name << " appears!\n";
     getch();
     while(dummy.hp > 0 & player.hp > 0){
             system("cls");
@@ -245,6 +251,7 @@ void training_zone_battle(){
                     getch();
                 }else{
                     cout << dummy.name << "'s attack missed!";
+                    getch();
                 }
                 break;
             case(2):
@@ -256,11 +263,12 @@ void training_zone_battle(){
                     cout << player.name << " takes " << dummy.atk << " damage.\n";
                     getch();
                 }else{
-                    cout << dummy.name << "\n's attack missed!";
+                    cout << dummy.name << "'s attack missed!";
+                    getch();
                 }
                 break;
             case(3):
-                escape = rand()%2;
+                escape = rand()%4;
                 if(escape == 1){
                     cout << "You successfully escaped.\n";
                     getch();
@@ -273,6 +281,7 @@ void training_zone_battle(){
                         getch();
                     }else{
                         cout << dummy.name << "'s attack missed!";
+                        getch();
                     }
                 }
                 break;
@@ -296,8 +305,30 @@ void training_zone_battle(){
             getch();
             training_zone_battle();
     }
+    system("cls");
+    cout << dummy.name << " dies.\n";
+    getch();
+    player.exp += dummy.exp;
+    cout << "\n" << player.name << " gains " << dummy.exp << " experience points.\n\n";
+    getch();
+    system("cls");
+    if(player.exp >= player.nextlevel){
+        playerup();
+    }
     training_zone_finish();
 
+}
+
+void statistics(){
+    cout << player.name << " " << player.surname << "'s statistics." << endl;
+    cout << "\tClass: " << player.playerclass << endl;
+    cout << "\tLevel: " << player.level << endl;
+    cout << "\tExperience Points: " << player.exp << endl;
+    cout << "\tExperience Points to the next level: " << player.nextlevel << endl;
+    cout << "\tHealth Points: " << player.hp << endl;
+    cout << "\tAttack points: " << player.atk << endl;
+    cout << "\tMagic points: " << player.mag << endl;
+    getch();
 }
 
 void training_zone_finish(){
@@ -305,4 +336,28 @@ void training_zone_finish(){
     cout << "Congratulations, you finished the alpha. Here's a virtual cup for you.\n";
     getch();
     exit(0);
+}
+
+void playerup(){
+    player.level++;
+    player.nextlevel = player.nextlevel *= 2;
+    cout << player.name << " leveled up!\n\n";
+    switch(player.level){
+    case(2):
+        player.hp += 10;
+        player.atk += 5;
+        player.mag += 10;
+        break;
+    case(3):
+        player.hp += 10;
+        player.atk += 5;
+        player.mag += 10;
+        break;
+    case(4):
+        player.hp += 15;
+        player.atk += 10;
+        player.mag += 15;
+        break;
+    }
+    statistics();
 }
