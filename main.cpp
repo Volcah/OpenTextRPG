@@ -1,10 +1,20 @@
 #include <iostream>
 #include <cstdlib>
-#include <stdlib.h>
-#include <stdio.h>
-#include <conio.h>
+#include <cstdlib>
+#include <cstdio>
+
 #include <string>
 #include <istream>
+
+#ifdef _WIN32
+#include <conio.h>
+#define CLEAR "clear"
+#elif __APPLE__ || __linux__
+#include <ncurses.h>
+#define CLEAR "clear"
+#else
+#error Error, cannot define multiplatform methods
+#endif
 
 using namespace std;
 
@@ -13,14 +23,12 @@ struct Player{
     string name;
     string surname;
     string playerclass;
-    int hp, atk, mag, exp;
+    int hp = 0, atk = 0, mag = 0, exp = 0;
     int level = 1;
     int nextlevel = 15;
 };
 
 Player player;
-
-
 
 //Nemici
 struct Dummy{
@@ -51,13 +59,13 @@ void training_zone_finish();
 //Programma principale.
 int main(int argc, char* argv[])
 {
-    system("cls");
+    system(CLEAR);
     menu();
 }
 
 //Menu principale.
 void menu(){
-    system("cls");
+    system(CLEAR);
     int selection;
     cout << "Welcome to OpenTextRPG.\n\nSelect an option.\n\n\t1-Play\n\t2-Settings\n\t3-Exit\n\n";
     cin >> selection;
@@ -70,7 +78,6 @@ void menu(){
         break;
     case(3):
         exit(0);
-        break;
     default:
         menu();
         break;
@@ -79,7 +86,7 @@ void menu(){
 
 //Inizio gioco, salvataggi WIP.
 void play(){
-    system("cls");
+    system(CLEAR);
     int selection;
     cout << "Choose a name.\n\n";
     cin.ignore();
@@ -100,7 +107,7 @@ void play(){
 
 //Impostazioni, WIP.
 void settings(){
-    system("cls");
+    system(CLEAR);
     cout << "Still Work in Progress.\n";
     getch();
     menu();
@@ -108,7 +115,7 @@ void settings(){
 
 //Selezione della classe.
 void chooseclass(){
-    system("cls");
+    system(CLEAR);
     int selection;
     cout << "Ok, now choose a class.\n\n\t1-Archer\n\t2-Knight\n\t3-Mage\n\t4-Warrior\n";
     cin >> selection;
@@ -154,7 +161,7 @@ void chooseclass(){
 }
 
 void summary(){
-    system("cls");
+    system(CLEAR);
     int selection;
     cout << "This is a summary of your choices\n\nName: " << player.name << "\nSurname: " << player.surname << "\nClass: " << player.playerclass << "\nHealth Points: " << player.hp << "\nAttack: " << player.atk << "\nMagic: " << player.mag << "\n\n";
     cout << "Do you want to edit something?\n\t1-Name and Surname\n\t2-Class\n\t3-Go ahead\n\t4-Main Menu\n\n";
@@ -179,28 +186,28 @@ void summary(){
 }
 
 void training_zone_1(){
-    system("cls");
+    system(CLEAR);
     int selection;
     cout << "Trainer:\nWelcome to the Training Zone, I will teach you how to survive out of the safe\nzones.\n";
     getch();
-    system("cls");
+    system(CLEAR);
     cout << "Trainer:\nNow, tell me what do you want to learn, please.\n\t1-Attack\n\t2-Magic\n\t3-Special\n\t4-Nothing, thanks.\n";
     cin >> selection;
     switch(selection){
     case(1):
-        system("cls");
+        system(CLEAR);
         cout << "Trainer:\nWhen attacked by one or more enemies, you should give it right back to 'em.\nChoose Attack when the Battle Menu shows up";
         getch();
         training_zone_1();
         break;
     case(2):
-        system("cls");
+        system(CLEAR);
         cout << "Trainer:\nUnlike the Attack, the magic has multiple purposes. In fact, magic can\nserve to attack, but also to heal yourself or to confuse the enemy.";
         getch();
         training_zone_1();
         break;
     case(3):
-        system("cls");
+        system(CLEAR);
         cout << "Trainer:\nAs the name says, they are attacks/spells very powerful that can only be\nused once in battle.";
         getch();
         training_zone_1();
@@ -215,7 +222,7 @@ void training_zone_1(){
 }
 
 void training_zone_2(){
-    system("cls");
+    system(CLEAR);
     int selection;
     cout << "Trainer:\nThis is a dummy, you can use it when you want to train your combat skills.\n";
     cout << "When you're ready, press 1 to start the battle, or press 0 to go back.\n";
@@ -228,11 +235,11 @@ void training_zone_2(){
 }
 
 void training_zone_battle(){
-    system("cls");
+    system(CLEAR);
     cout << dummy.name << " appears!\n";
     getch();
-    while(dummy.hp > 0 & player.hp > 0){
-            system("cls");
+    while(dummy.hp > 0 && player.hp > 0){
+            system(CLEAR);
             int selection;
             cout << player.name << "'s life= " << player.hp << "\n" << dummy.name << "'s life= " << dummy.hp << "\n\n";
             cout << "What do you want to do?\n\t";
@@ -305,13 +312,13 @@ void training_zone_battle(){
             getch();
             training_zone_battle();
     }
-    system("cls");
+    system(CLEAR);
     cout << dummy.name << " dies.\n";
     getch();
     player.exp += dummy.exp;
     cout << "\n" << player.name << " gains " << dummy.exp << " experience points.\n\n";
     getch();
-    system("cls");
+    system(CLEAR);
     if(player.exp >= player.nextlevel){
         playerup();
     }
@@ -332,7 +339,7 @@ void statistics(){
 }
 
 void training_zone_finish(){
-    system("cls");
+    system(CLEAR);
     cout << "Congratulations, you finished the alpha. Here's a virtual cup for you.\n";
     getch();
     exit(0);
@@ -357,6 +364,8 @@ void playerup(){
         player.hp += 15;
         player.atk += 10;
         player.mag += 15;
+        break;
+    default:
         break;
     }
     statistics();
