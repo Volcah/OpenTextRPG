@@ -8,7 +8,7 @@
 
 #ifdef _WIN32
 #include <conio.h>
-#define CLEAR "clear"
+#define CLEAR "cls"
 #elif __APPLE__ || __linux__
 #include <ncurses.h>
 #define CLEAR "clear"
