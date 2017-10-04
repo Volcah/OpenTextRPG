@@ -18,28 +18,35 @@
 
 using namespace std;
 
-//Inizializzazione delle variabili.giocatore.
+//Inizializzazione delle variabili giocatore.
 struct Player{
     string name;
     string surname;
     string playerclass;
-    int hp = 0, atk = 0, mag = 0, exp = 0;
+    int hp = 0, atk = 0, mag = 0, exp = 0, maxhp = 0;
     int level = 1;
     int nextlevel = 15;
 };
 
 Player player;
 
-//Nemici
+//Inizializzazione variabili nemico.
 struct Dummy{
     string name = "Dummy";
     int hp = 105;
-    int atk = 0;
+    int atk = 1;
     int level = 1;
     int exp = 15;
 };
 
 Dummy dummy;
+
+//Inizializzazione oggetti/inventario.
+struct Items{
+    int potion = 1;
+};
+
+Items items;
 
 //Inizializzazione delle zone principali.
 void menu();
@@ -49,8 +56,10 @@ void chooseclass();
 void summary();
 void statistics();
 void playerup();
+void inventory();
+void magic();
 
-//Training zones
+//Training zone
 void training_zone_1();
 void training_zone_2();
 void training_zone_battle();
@@ -125,24 +134,28 @@ void chooseclass(){
         player.hp = 20;
         player.atk = 25;
         player.mag = 10;
+        player.maxhp = player.hp;
         break;
     case(2):
         player.playerclass = "Knight";
         player.hp = 70;
         player.atk = 25;
         player.mag = 10;
+        player.maxhp = player.hp;
         break;
     case(3):
         player.playerclass = "Mage";
         player.hp = 30;
         player.atk = 10;
         player.mag = 30;
+        player.maxhp = player.hp;
         break;
     case(4):
         player.playerclass = "Warrior";
         player.hp = 50;
         player.atk = 45;
         player.mag = 10;
+        player.maxhp = player.hp;
         break;
     default:
         chooseclass();
@@ -160,6 +173,7 @@ void chooseclass(){
 
 }
 
+//Riassunto delle scelte.
 void summary(){
     system(CLEAR);
     int selection;
@@ -243,7 +257,7 @@ void training_zone_battle(){
             int selection;
             cout << player.name << "'s life= " << player.hp << "\n" << dummy.name << "'s life= " << dummy.hp << "\n\n";
             cout << "What do you want to do?\n\t";
-            cout << "1-Attack\n\t2-Magic\n\t3-Escape\n\n";
+            cout << "1-Attack\n\t2-Magic\n\t3-Escape\n\t4-Inventory\n\n";
             cin >> selection;
             int enemyattack;
             int escape;
@@ -262,9 +276,7 @@ void training_zone_battle(){
                 }
                 break;
             case(2):
-                dummy.hp -= player.mag;
-                cout << dummy.name << " takes " << player.mag << " damage.\n";
-                enemyattack = rand()%2;
+                magic();
                 if(enemyattack == 1){
                     player.hp -= dummy.atk;
                     cout << player.name << " takes " << dummy.atk << " damage.\n";
@@ -292,6 +304,8 @@ void training_zone_battle(){
                     }
                 }
                 break;
+            case(4):
+                inventory();
             default:
                 enemyattack = rand()%2;
                 if(enemyattack == 1){
@@ -326,6 +340,7 @@ void training_zone_battle(){
 
 }
 
+//Statistiche giocatore.
 void statistics(){
     cout << player.name << " " << player.surname << "'s statistics." << endl;
     cout << "\tClass: " << player.playerclass << endl;
@@ -338,6 +353,7 @@ void statistics(){
     getch();
 }
 
+//WIP.
 void training_zone_finish(){
     system(CLEAR);
     cout << "Congratulations, you finished the alpha. Here's a virtual cup for you.\n";
@@ -345,6 +361,8 @@ void training_zone_finish(){
     exit(0);
 }
 
+
+//Sistema di livellaggio.
 void playerup(){
     player.level++;
     player.nextlevel = player.nextlevel *= 2;
@@ -354,19 +372,68 @@ void playerup(){
         player.hp += 10;
         player.atk += 5;
         player.mag += 10;
+        player.maxhp = player.hp;
         break;
     case(3):
         player.hp += 10;
         player.atk += 5;
         player.mag += 10;
+        player.maxhp = player.hp;
         break;
     case(4):
         player.hp += 15;
         player.atk += 10;
         player.mag += 15;
+        player.maxhp = player.hp;
         break;
     default:
         break;
     }
     statistics();
+}
+
+//Inventario.
+void inventory(){
+    system(CLEAR);
+    int selection;
+    cout << "You have:\n\t";
+    cout << items.potion << " Potion/s\n";
+    cout << "\nWhat do you want to use?\n\t";
+    cout << "1-Potion\n\t2-Exit\n";
+    cin >> selection;
+    switch(selection){
+    case(1):
+        player.hp +=20;
+        if(player.hp > player.maxhp){
+            player.hp = player.maxhp;
+        }
+        cout << player.name << " heals " << player.mag << " HP.\n";
+        getch();
+        break;
+    case(2):
+        break;
+    default:
+        inventory();
+    }
+}
+
+//Menu' scelta magie.
+void magic(){
+    system(CLEAR);
+    int selection;
+    cout << "Select a spell.\n\t1-Cure\n\t2-Exit\n";
+    cin >> selection;
+    switch(selection){
+    case(1):
+        player.hp += player.mag;
+        if(player.hp > player.maxhp){
+            player.hp = player.maxhp;
+        }
+        cout << player.name << " heals " << player.mag << " HP.\n";
+        getch();
+    case(2):
+        break;
+    default:
+        break;
+    }
 }
