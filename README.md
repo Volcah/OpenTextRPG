@@ -11,7 +11,7 @@ Actually
 To-Do list:
 - [x] Multi-platform.
 - [ ] Save/Load system.
-- [ ] Inventory system.
+- [x] Inventory system.
 - [ ] Wiki.
 
 Executables available now:
