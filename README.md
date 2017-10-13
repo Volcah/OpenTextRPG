@@ -17,4 +17,4 @@ To-Do list:
 Executables available now:
 
 
-[![Windows](/images/windows.png)](https://github.com/FabioArdis/OpenTextRPG/releases/download/0.2.0/OpenTextRPG-0.2.0-prerelease.exe)
+[![Windows](/images/windows.png)](https://github.com/FabioArdis/OpenTextRPG/releases/download/0.2.1/OpenTextRPG-0.2.1-prerelease.exe)
