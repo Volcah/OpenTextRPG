@@ -12,7 +12,7 @@ To-Do list:
 - [x] Multi-platform.
 - [ ] Save/Load system.
 - [x] Inventory system.
-- [ ] Wiki.
+- [x] Wiki.
 
 Executables available now:
 
