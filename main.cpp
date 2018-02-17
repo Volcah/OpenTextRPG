@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <cstdlib>
 #include <cstdio>
+#include <time.h>
 
 #include <string>
 #include <istream>
@@ -16,10 +17,10 @@ using namespace rlutil;
 
 //Inizializzazione delle variabili giocatore.
 struct Player{
-    string name;
+    string name = "Player";
     string surname;
-    string playerclass;
-    int hp = 0, atk = 0, mag = 0, exp = 0, maxhp = 0;
+    string playerclass = "Test";
+    int hp = 50, atk = 20, mag = 20, exp = 0, maxhp = 50;
     int level = 1;
     int nextlevel = 15;
 };
@@ -33,6 +34,7 @@ struct Dummy{
     int atk = 1;
     int level = 1;
     int exp = 15;
+    int maxhp = 105;
 };
 
 Dummy dummy;
@@ -62,6 +64,10 @@ void training_zone_2();
 void training_zone_battle();
 void training_zone_finish();
 
+//Battle zones
+void randomize_battle();
+void random_battle();
+
 //Programma principale.
 int main(int argc, char* argv[])
 {
@@ -78,20 +84,25 @@ void menu(){
     cout << "Select an option.\n\n";
     setColor(2);
     cout << "\t1-Play\n";
+    cout << "\t2-Random Battle\n";
     resetColor();
-    cout << "\t2-Settings\n";
-    cout << "\t3-Exit\n\n";
+    cout << "\t3-Settings\n";
+    cout << "\t4-Exit\n\n";
     cin >> selection;
     switch(selection){
     case(1):
         play();
         break;
     case(2):
-        settings();
+        randomize_battle();
         break;
     case(3):
+        settings();
+        break;
+    case(4):
         exit(0);
     default:
+        cin.clear();// Per ignorare caratteri come ^Z, ecc.
         menu();
         break;
     }
@@ -268,6 +279,7 @@ void training_zone_2(){
 
 void training_zone_battle(){
     cls();
+    dummy.hp = dummy.maxhp;
     setColor(5);
     cout << dummy.name << " appears!\n";
     resetColor();
@@ -497,4 +509,149 @@ void magic(){
 
 void msg(string name, string message){
     cout << name << ": " << message;
+}
+
+void randomize_battle(){
+    cls();
+    cout << "Randomizing..." << endl;
+    srand(time(NULL));
+    player.atk = rand() % 25 + 1;
+    player.hp = rand() % 100 + 1;
+    player.mag = rand() % 30 + 1;
+    player.maxhp = player.hp;
+
+    dummy.atk = rand() % 30 + 1;
+    dummy.hp = rand() % 100 + 1;
+    dummy.maxhp = dummy.hp;
+
+    cout << "Succesfully randomized." << endl;
+
+    cout << "Player's Health Points: " << player.hp << endl;
+    cout << "Player's Attack points: " << player.atk << endl;
+    cout << "Player's Magic points: " << player.mag << endl << endl;
+
+    cout << "Enemy's Health Points: " << dummy.hp << endl;
+    cout << "Enemy's Attack points: " << dummy.atk << endl;
+
+    getch();
+
+    random_battle();
+    /*
+
+    */
+}
+
+void random_battle(){
+    cls();
+    dummy.hp = dummy.maxhp;
+    setColor(5);
+    cout << dummy.name << " appears!\n";
+    resetColor();
+    getch();
+    fflush(stdin);
+    while(dummy.hp > 0 && player.hp > 0){
+            cls();
+            string selection;
+            setColor(2);
+            cout << player.name << "'s life= " << player.hp << endl;
+            setColor(4);
+            cout << dummy.name << "'s life= " << dummy.hp << "\n\n";
+            resetColor();
+            cout << "What do you want to do?\n\t";
+            cout << "1-Attack\n\t2-Magic\n\t3-Escape\n\t4-Inventory\n\n";
+            int enemyattack;
+            int escape;
+            getline(cin, selection);
+            int selectionint = atoi(selection.c_str());
+            switch(selectionint){
+            case(1):
+                dummy.hp -= player.atk;
+                setColor(1);
+                cout << dummy.name << " takes " << player.atk << " damage.\n";
+                enemyattack = rand()%2;
+                if(enemyattack == 1){
+                    player.hp -= dummy.atk;
+                    setColor(4);
+                    cout << player.name << " takes " << dummy.atk << " damage.\n";
+                    resetColor();
+                    getch();
+                }else{
+                    setColor(3);
+                    cout << dummy.name << "'s attack missed!";
+                    resetColor();
+                    getch();
+                }
+                break;
+            case(2):
+                magic();
+                if(enemyattack == 1){
+                    player.hp -= dummy.atk;
+                    setColor(4);
+                    cout << player.name << " takes " << dummy.atk << " damage.\n";
+                    resetColor();
+                    getch();
+                }else{
+                    setColor(3);
+                    cout << dummy.name << "'s attack missed!";
+                    resetColor();
+                    getch();
+                }
+                break;
+            case(3):
+                escape = rand()%4;
+                if(escape == 1){
+                    setColor(9);
+                    cout << "You successfully escaped.\n";
+                    resetColor();
+                    getch();
+                    menu();
+                }else{
+                    enemyattack = rand()%2;
+                    if(enemyattack == 1){
+                        player.hp -= dummy.atk;
+                        setColor(4);
+                        cout << player.name << " takes " << dummy.atk << " damage.\n";
+                        resetColor();
+                        getch();
+                    }else{
+                        setColor(3);
+                        cout << dummy.name << "'s attack missed!";
+                        resetColor();
+                        getch();
+                    }
+                }
+                break;
+            case(4):
+                inventory();
+            default:
+                enemyattack = rand()%2;
+                if(enemyattack == 1){
+                    player.hp -= dummy.atk;
+                    setColor(4);
+                    cout << player.name << " takes " << dummy.atk << " damage.\n";
+                    resetColor();
+                    getch();
+                }else{
+                    setColor(3);
+                    cout << dummy.name << "'s attack missed!";
+                    resetColor();
+                }
+                break;
+
+            }
+    }
+    while(player.hp <= 0){
+            setColor(5);
+            cout << player.name << "dies.\n";
+            resetColor();
+            cout << "Game Over, HOW did you arrive here?";
+            getch();
+            training_zone_battle();
+    }
+    cls();
+    setColor(2);
+    cout << dummy.name << " dies.\n";
+    resetColor();
+    getch();
+    menu();
 }
