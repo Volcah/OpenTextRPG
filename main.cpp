@@ -6,7 +6,7 @@
     when it will be written decently.
     If you want to help me, you can try to
     clean the code or optimize it, that would
-     be really helpful!
+    be really helpful!
 
 */
 
@@ -29,7 +29,8 @@ using namespace std;
 using namespace rlutil;
 
 //Player variables
-struct Player{
+struct Player
+{
     string name = "Player";
     string surname;
     string playerclass = "Test";
@@ -41,7 +42,8 @@ struct Player{
 Player player;
 
 //Dummy variables
-struct Dummy{
+struct Dummy
+{
     string name = "Dummy";
     int hp = 105;
     int atk = 1;
@@ -53,7 +55,8 @@ struct Dummy{
 Dummy dummy;
 
 //Player Items
-struct Items{
+struct Items
+{
     int potion = 1;
 };
 
@@ -90,7 +93,8 @@ int main(int argc, char* argv[])
 }
 
 //Main menu
-void menu(){
+void menu()
+{
     saveDefaultColor();
     cls();
     int selection = 1;
@@ -123,7 +127,8 @@ void menu(){
 }
 
 //Starts the game
-void play(){
+void play()
+{
     cls();
     int selection = 1;
     cout << "Choose a name.\n\n";
@@ -132,8 +137,9 @@ void play(){
     cout << "\nChoose a surname.\n\n";
     getline(cin, player.surname);
     cout << "\nSo, you are " << player.name << " " << player.surname << "?\n\nPress 1 for yes, 0 for no.\n\n";
-  cin >> selection;
-    switch(selection){
+    cin >> selection;
+    switch(selection)
+    {
         case(1):
             chooseClass();
             break;
@@ -144,7 +150,8 @@ void play(){
 }
 
 //Settings, work in progress
-void settings(){
+void settings()
+{
     cls();
     cout << "Still Work in Progress.\n";
     getch();
@@ -152,12 +159,14 @@ void settings(){
 }
 
 //Class selection
-void chooseClass(){
+void chooseClass()
+{
     cls();
-  int selection = 1;
+    int selection = 1;
     cout << "Ok, now choose a class.\n\n\t1-Archer\n\t2-Knight\n\t3-Mage\n\t4-Warrior\n";
-  cin >> selection;
-    switch(selection){
+    cin >> selection;
+    switch(selection)
+    {
         case(1):
             player.playerclass = "Archer";
             player.hp = 20;
@@ -192,13 +201,14 @@ void chooseClass(){
     }
     int confirm;
     cout << "\nSo, you are " << player.name << " " << player.surname << ", the " << player.playerclass << "?\n\nPress 1 for yes, 0 for no.\n\n";
-  cin >> confirm;
-    if(confirm == 1){
+    cin >> confirm;
+    if(confirm == 1)
+    {
         summary();
         exit(0);
-    }else{
-        chooseClass();
     }
+    else
+        chooseClass();
 
 }
 
@@ -217,8 +227,9 @@ void summary(){
     cout << "\nMagic: " << player.mag << "\n\n";
     resetColor();
     cout << "Do you want to edit something?\n\t1-Name and Surname\n\t2-Class\n\t3-Go ahead\n\t4-Main Menu\n\n";
-  cin >> selection;
-    switch(selection){
+    cin >> selection;
+    switch(selection)
+    {
         case(1):
             play();
             break;
@@ -237,15 +248,17 @@ void summary(){
     }
 }
 
-void training_zone_1(){
+void training_zone_1()
+{
     cls();
-  int selection = 1;
+    int selection = 1;
     msg("Trainer", "\nWelcome to the Training Zone, I will teach you how to survive out of the safe\nzones.\n");
     getch();
     cls();
     msg("Trainer","\nNow, tell me what do you want to learn, please.\n\t1-Attack\n\t2-Magic\n\t3-Special\n\t4-Nothing, thanks.\n");
-  cin >> selection;
-    switch(selection){
+    cin >> selection;
+    switch(selection)
+    {
         case(1):
             cls();
             msg("Trainer", "\nWhen attacked by one or more enemies, you should give it right back to 'em.\nChoose Attack when the Battle Menu shows up");
@@ -273,25 +286,26 @@ void training_zone_1(){
     }
 }
 
-void training_zone_2(){
+void training_zone_2()
+{
     cls();
-  int selection = 1;
+    int selection = 1;
     msg("Trainer","\nThis is a dummy, you can use it when you want to train your combat skills.\nWhen you're ready, press 1 to start the battle, or press 0 to go back.\n");
-  cin >> selection;
-    if(selection == 1){
+    cin >> selection;
+    if(selection == 1)
         training_zone_battle();
-    }else{
+    else
         training_zone_1();
-    }
 }
 
 /*  
-    The battle is made of a loop that loops
+    The battle is made of a while that loops
     until Dummy's or Player's life is equal
     or less than zero.
 */
 
-void training_zone_battle(){
+void training_zone_battle()
+{
     cls();
     dummy.hp = dummy.maxHp;
     setColor(5);
@@ -299,7 +313,8 @@ void training_zone_battle(){
     resetColor();
     waitkey;
     int enemyAttack = 1;
-    while(dummy.hp > 0 && player.hp > 0){
+    while(dummy.hp > 0 && player.hp > 0
+    {
         cls();
         int selection = 1;
         setColor(2);
@@ -311,19 +326,23 @@ void training_zone_battle(){
         cout << "1-Attack\n\t2-Magic\n\t3-Escape\n\t4-Inventory\n\n";
         int escape;
         cin >> selection;
-        switch(selection){
+        switch(selection)
+        {
             case(1):
                 dummy.hp -= player.atk;
                 setColor(1);
                 cout << dummy.name << " takes " << player.atk << " damage.\n";
                 enemyAttack = rand()%2;
-                if(enemyAttack == 1 && dummy.hp > 0){
+                if(enemyAttack == 1 && dummy.hp > 0)
+                {
                     player.hp -= dummy.atk;
                     setColor(4);
                     cout << player.name << " takes " << dummy.atk << " damage.\n";
                     resetColor();
                     getch();
-                }else{
+                }
+                else
+                {
                     setColor(3);
                     cout << dummy.name << "'s attack missed!";
                     resetColor();
@@ -332,13 +351,16 @@ void training_zone_battle(){
                 break;
             case(2):
                 magic();
-                if(enemyAttack == 1 && dummy.hp > 0){
+                if(enemyAttack == 1 && dummy.hp > 0)
+                {
                     player.hp -= dummy.atk;
                     setColor(4);
                     cout << player.name << " takes " << dummy.atk << " damage.\n";
                     resetColor();
                     getch();
-                }else{
+                }
+                else
+                {
                     setColor(3);
                     cout << dummy.name << "'s attack missed!";
                     resetColor();
@@ -347,21 +369,27 @@ void training_zone_battle(){
                 break;
             case(3):
                 escape = rand()%4;
-                if(escape == 1){
+                if(escape == 1)
+                {
                     setColor(9);
                     cout << "You successfully escaped.\n";
                     resetColor();
                     getch();
                     training_zone_finish();
-                }else{
+                }
+                else
+                {
                     enemyAttack = rand()%2;
-                    if(enemyAttack == 1 && dummy.hp > 0){
+                    if(enemyAttack == 1 && dummy.hp > 0)
+                    {
                         player.hp -= dummy.atk;
                         setColor(4);
                         cout << player.name << " takes " << dummy.atk << " damage.\n";
                         resetColor();
                         getch();
-                    }else{
+                    }
+                    else
+                    {
                         setColor(3);
                         cout << dummy.name << "'s attack missed!";
                         resetColor();
@@ -373,13 +401,16 @@ void training_zone_battle(){
                 inventory();
             default:
                 enemyAttack = rand()%2;
-                if(enemyAttack == 1 && dummy.hp > 0){
+                if(enemyAttack == 1 && dummy.hp > 0)
+                {
                     player.hp -= dummy.atk;
                     setColor(4);
                     cout << player.name << " takes " << dummy.atk << " damage.\n";
                     resetColor();
                     getch();
-                }else{
+                }
+                else
+                {
                     setColor(3);
                     cout << dummy.name << "'s attack missed!";
                     resetColor();
@@ -388,7 +419,8 @@ void training_zone_battle(){
 
         }
     }
-    while(player.hp <= 0){
+    while(player.hp <= 0)
+    {
         setColor(5);
         cout << player.name << "dies.\n";
         resetColor();
@@ -412,15 +444,15 @@ void training_zone_battle(){
     resetColor();
     getch();
     cls();
-    if(player.exp >= player.nextlevel){
+    if(player.exp >= player.nextlevel)
         playerUp();
-    }
     training_zone_finish();
 
 }
 
 //Statistiche giocatore.
-void statistics(){
+void statistics()
+{
     cout << player.name << " " << player.surname << "'s statistics." << endl;
     cout << "\tClass: " << player.playerclass << endl;
     cout << "\tLevel: " << player.level << endl;
@@ -433,7 +465,8 @@ void statistics(){
 }
 
 //WIP.
-void training_zone_finish(){
+void training_zone_finish()
+{
     cls();
     cout << "Congratulations, you finished the alpha. Here's a virtual cup for you.\n";
     getch();
@@ -442,13 +475,15 @@ void training_zone_finish(){
 
 
 //Sistema di livellaggio.
-void playerUp(){
+void playerUp()
+{
     player.level++;
     player.nextlevel = player.nextlevel *= 2;
     setColor(9);
     cout << player.name << " leveled up!\n\n";
     resetColor();
-    switch(player.level){
+    switch(player.level)
+    {
         case(2):
             player.hp += 10;
             player.atk += 5;
@@ -474,21 +509,20 @@ void playerUp(){
 }
 
 //Inventario.
-void inventory(){
+void inventory()
+{
     cls();
     int selection = 1;
     cout << "You have:\n\t";
     cout << items.potion << " Potion/s\n";
     cout << "\nWhat do you want to use?\n\t";
     cout << "1-Potion\n\t2-Exit\n";
-    
-    
-    switch(selection){
+    switch(selection)
+    {
         case(1):
             player.hp +=20;
-            if(player.hp > player.maxHp){
+            if(player.hp > player.maxHp)
                 player.hp = player.maxHp;
-            }
             setColor(2);
             cout << player.name << " heals " << player.mag << " HP.\n";
             resetColor();
@@ -502,17 +536,18 @@ void inventory(){
 }
 
 //Menu' scelta magie.
-void magic(){
+void magic()
+{
     cls();
     int selection = 1;
     cout << "Select a spell.\n\t1-Cure\n\t2-Fireball\n\t3-Exit\n";
-  cin >> selection;
-    switch(selection){
+    cin >> selection;
+    switch(selection)
+    {
         case(1):
             player.hp += player.mag;
-            if(player.hp > player.maxHp){
+            if(player.hp > player.maxHp)
                 player.hp = player.maxHp;
-            }
             setColor(2);
             cout << player.name << " heals " << player.mag << " HP.\n";
             resetColor();
@@ -533,15 +568,19 @@ void magic(){
 
 
 //Prints a message
-void msg(string name, string message){
+void msg(string name, string message)
+{
     cout << name << ": " << message;
 }
 
 //Randomizes Dummy's and Player's variables
-void randomizeBattle(){
+void randomizeBattle()
+{
     cls();
+
     cout << "Randomizing..." << endl;
     srand(time(NULL));
+
     player.atk = rand() % 25 + 1;
     player.hp = rand() % 100 + 1;
     player.mag = rand() % 30 + 1;
@@ -566,7 +605,8 @@ void randomizeBattle(){
 }
 
 //Variant of the normal battle
-void random_battle(){
+void random_battle()
+{
     cls();
     dummy.hp = dummy.maxHp;
     setColor(5);
@@ -574,7 +614,8 @@ void random_battle(){
     resetColor();
     waitkey;
     int enemyAttack = 1;
-    while(dummy.hp > 0 && player.hp > 0){
+    while(dummy.hp > 0 && player.hp > 0)
+    {
         cls();
         int selection = 1;
         setColor(2);
@@ -586,19 +627,23 @@ void random_battle(){
         cout << "1-Attack\n\t2-Magic\n\t3-Escape\n\t4-Inventory\n\n";
         int escape;
         cin >> selection;
-        switch(selection){
+        switch(selection)
+        {
             case(1):
                 dummy.hp -= player.atk;
                 setColor(1);
                 cout << dummy.name << " takes " << player.atk << " damage.\n";
                 enemyAttack = rand()%2;
-                if(enemyAttack == 1 && dummy.hp > 0){
+                if(enemyAttack == 1 && dummy.hp > 0)
+                {
                     player.hp -= dummy.atk;
                     setColor(4);
                     cout << player.name << " takes " << dummy.atk << " damage.\n";
                     resetColor();
                     getch();
-                }else{
+                }
+                else
+                {
                     setColor(3);
                     cout << dummy.name << "'s attack missed!";
                     resetColor();
@@ -607,13 +652,16 @@ void random_battle(){
                 break;
             case(2):
                 magic();
-                if(enemyAttack == 1 && dummy.hp > 0){
+                if(enemyAttack == 1 && dummy.hp > 0)
+                {
                     player.hp -= dummy.atk;
                     setColor(4);
                     cout << player.name << " takes " << dummy.atk << " damage.\n";
                     resetColor();
                     getch();
-                }else{
+                }
+                else
+                {
                     setColor(3);
                     cout << dummy.name << "'s attack missed!";
                     resetColor();
@@ -622,21 +670,27 @@ void random_battle(){
                 break;
             case(3):
                 escape = rand()%4;
-                if(escape == 1){
+                if(escape == 1)
+                {
                     setColor(9);
                     cout << "You successfully escaped.\n";
                     resetColor();
                     getch();
                     menu();
-                }else{
+                }
+                else
+                {
                     enemyAttack = rand()%2;
-                    if(enemyAttack == 1 && dummy.hp > 0){
+                    if(enemyAttack == 1 && dummy.hp > 0)
+                    {
                         player.hp -= dummy.atk;
                         setColor(4);
                         cout << player.name << " takes " << dummy.atk << " damage.\n";
                         resetColor();
                         getch();
-                    }else{
+                    }
+                    else
+                    {
                         setColor(3);
                         cout << dummy.name << "'s attack missed!";
                         resetColor();
@@ -648,14 +702,17 @@ void random_battle(){
                 inventory();
             default:
                 enemyAttack = rand()%2;
-                if(enemyAttack == 1 && dummy.hp > 0){
+                if(enemyAttack == 1 && dummy.hp > 0)
+                {
                     player.hp -= dummy.atk;
                     setColor(4);
                     cout << player.name << " takes " << dummy.atk << " damage.\n";
 
                     resetColor();
                     getch();
-                }else{
+                }
+                else
+                {
                     setColor(3);
                     cout << dummy.name << "'s attack missed!";
                     resetColor();
@@ -664,7 +721,8 @@ void random_battle(){
 
         }
     }
-    while(player.hp <= 0){
+    while(player.hp <= 0)
+    {
         setColor(5);
         cout << player.name << "dies.\n";
         resetColor();
@@ -682,7 +740,8 @@ void random_battle(){
 }
 
 //Resets health
-void resetHealth(){
+void resetHealth()
+{
     player.hp = player.maxHp;
     dummy.hp = dummy.maxHp;
 }
