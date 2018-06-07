@@ -1,5 +1,18 @@
+/*
+    Premise
+
+    This code is NOT clean, perfect or anyhow
+    optimized, so you should fork this only
+    when it will be written decently.
+    If you want to help me, you can try to
+    clean the code or optimize it, that would
+     be really helpful!
+
+*/
+
+
+//Including the libraries
 #include <iostream>
-#include <cstdlib>
 #include <cstdlib>
 #include <cstdio>
 #include <ctime>
@@ -15,7 +28,7 @@
 using namespace std;
 using namespace rlutil;
 
-//Inizializzazione delle variabili giocatore.
+//Player variables
 struct Player{
     string name = "Player";
     string surname;
@@ -27,7 +40,7 @@ struct Player{
 
 Player player;
 
-//Inizializzazione variabili nemico.
+//Dummy variables
 struct Dummy{
     string name = "Dummy";
     int hp = 105;
@@ -39,14 +52,14 @@ struct Dummy{
 
 Dummy dummy;
 
-//Inizializzazione oggetti/inventario.
+//Player Items
 struct Items{
     int potion = 1;
 };
 
 Items items;
 
-//Inizializzazione delle zone principali.
+//Zones & menus
 void menu();
 void play();
 void settings();
@@ -69,14 +82,14 @@ void training_zone_finish();
 void randomizeBattle();
 void random_battle();
 
-//Programma principale.
+//Main function
 int main(int argc, char* argv[])
 {
     cls();
     menu();
 }
 
-//Menu principale.
+//Main menu
 void menu(){
     saveDefaultColor();
     cls();
@@ -103,13 +116,13 @@ void menu(){
         case(4):
             exit(0);
         default:
-            cin.clear();// Per ignorare caratteri come ^Z, ecc.
+            cin.clear();
             menu();
             break;
     }
 }
 
-//Inizio gioco, salvataggi WIP.
+//Starts the game
 void play(){
     cls();
     int selection = 1;
@@ -119,7 +132,7 @@ void play(){
     cout << "\nChoose a surname.\n\n";
     getline(cin, player.surname);
     cout << "\nSo, you are " << player.name << " " << player.surname << "?\n\nPress 1 for yes, 0 for no.\n\n";
-	cin >> selection;
+  cin >> selection;
     switch(selection){
         case(1):
             chooseClass();
@@ -130,7 +143,7 @@ void play(){
     }
 }
 
-//Impostazioni, WIP.
+//Settings, work in progress
 void settings(){
     cls();
     cout << "Still Work in Progress.\n";
@@ -138,12 +151,12 @@ void settings(){
     menu();
 }
 
-//Selezione della classe.
+//Class selection
 void chooseClass(){
     cls();
-	int selection = 1;
+  int selection = 1;
     cout << "Ok, now choose a class.\n\n\t1-Archer\n\t2-Knight\n\t3-Mage\n\t4-Warrior\n";
-	cin >> selection;
+  cin >> selection;
     switch(selection){
         case(1):
             player.playerclass = "Archer";
@@ -179,7 +192,7 @@ void chooseClass(){
     }
     int confirm;
     cout << "\nSo, you are " << player.name << " " << player.surname << ", the " << player.playerclass << "?\n\nPress 1 for yes, 0 for no.\n\n";
-	cin >> confirm;
+  cin >> confirm;
     if(confirm == 1){
         summary();
         exit(0);
@@ -189,7 +202,7 @@ void chooseClass(){
 
 }
 
-//Riassunto delle scelte.
+//Summary of choices
 void summary(){
     cls();
     int selection = 1;
@@ -204,7 +217,7 @@ void summary(){
     cout << "\nMagic: " << player.mag << "\n\n";
     resetColor();
     cout << "Do you want to edit something?\n\t1-Name and Surname\n\t2-Class\n\t3-Go ahead\n\t4-Main Menu\n\n";
-	cin >> selection;
+  cin >> selection;
     switch(selection){
         case(1):
             play();
@@ -226,12 +239,12 @@ void summary(){
 
 void training_zone_1(){
     cls();
-	int selection = 1;
+  int selection = 1;
     msg("Trainer", "\nWelcome to the Training Zone, I will teach you how to survive out of the safe\nzones.\n");
     getch();
     cls();
     msg("Trainer","\nNow, tell me what do you want to learn, please.\n\t1-Attack\n\t2-Magic\n\t3-Special\n\t4-Nothing, thanks.\n");
-	cin >> selection;
+  cin >> selection;
     switch(selection){
         case(1):
             cls();
@@ -262,9 +275,9 @@ void training_zone_1(){
 
 void training_zone_2(){
     cls();
-	int selection = 1;
+  int selection = 1;
     msg("Trainer","\nThis is a dummy, you can use it when you want to train your combat skills.\nWhen you're ready, press 1 to start the battle, or press 0 to go back.\n");
-	cin >> selection;
+  cin >> selection;
     if(selection == 1){
         training_zone_battle();
     }else{
@@ -272,13 +285,19 @@ void training_zone_2(){
     }
 }
 
+/*  
+    The battle is made of a loop that loops
+    until Dummy's or Player's life is equal
+    or less than zero.
+*/
+
 void training_zone_battle(){
     cls();
     dummy.hp = dummy.maxHp;
     setColor(5);
     cout << dummy.name << " appears!\n";
     resetColor();
-	waitkey;
+    waitkey;
     int enemyAttack = 1;
     while(dummy.hp > 0 && player.hp > 0){
         cls();
@@ -290,8 +309,8 @@ void training_zone_battle(){
         resetColor();
         cout << "What do you want to do?\n\t";
         cout << "1-Attack\n\t2-Magic\n\t3-Escape\n\t4-Inventory\n\n";
-		int escape;
-		cin >> selection;
+        int escape;
+        cin >> selection;
         switch(selection){
             case(1):
                 dummy.hp -= player.atk;
@@ -374,6 +393,7 @@ void training_zone_battle(){
         cout << player.name << "dies.\n";
         resetColor();
         cout << "Game Over, HOW did you arrive here?";
+        //This is, indeed, impossible.
         getch();
         resetHealth();
         training_zone_battle();
@@ -417,7 +437,7 @@ void training_zone_finish(){
     cls();
     cout << "Congratulations, you finished the alpha. Here's a virtual cup for you.\n";
     getch();
-    exit(0);
+    menu();
 }
 
 
@@ -486,7 +506,7 @@ void magic(){
     cls();
     int selection = 1;
     cout << "Select a spell.\n\t1-Cure\n\t2-Fireball\n\t3-Exit\n";
-	cin >> selection;
+  cin >> selection;
     switch(selection){
         case(1):
             player.hp += player.mag;
@@ -511,10 +531,13 @@ void magic(){
     }
 }
 
+
+//Prints a message
 void msg(string name, string message){
     cout << name << ": " << message;
 }
 
+//Randomizes Dummy's and Player's variables
 void randomizeBattle(){
     cls();
     cout << "Randomizing..." << endl;
@@ -542,13 +565,14 @@ void randomizeBattle(){
     random_battle();
 }
 
+//Variant of the normal battle
 void random_battle(){
     cls();
     dummy.hp = dummy.maxHp;
     setColor(5);
     cout << dummy.name << " appears!\n";
     resetColor();
-	waitkey;
+    waitkey;
     int enemyAttack = 1;
     while(dummy.hp > 0 && player.hp > 0){
         cls();
@@ -561,7 +585,7 @@ void random_battle(){
         cout << "What do you want to do?\n\t";
         cout << "1-Attack\n\t2-Magic\n\t3-Escape\n\t4-Inventory\n\n";
         int escape;
-		cin >> selection;
+        cin >> selection;
         switch(selection){
             case(1):
                 dummy.hp -= player.atk;
@@ -657,6 +681,7 @@ void random_battle(){
     menu();
 }
 
+//Resets health
 void resetHealth(){
     player.hp = player.maxHp;
     dummy.hp = dummy.maxHp;
