@@ -13,4 +13,6 @@ Player::Player()
 	level = 1;
 	nextlevel = 15;
 	actualZone = 1;
+	x = 3;
+	y = 3;
 };

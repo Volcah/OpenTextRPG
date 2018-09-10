@@ -9,6 +9,7 @@ using namespace rlutil;
 Player iPlayer;
 Dummy iDummy;
 Enemy rEnemy;
+Location iLocation;
 
 ifstream Save1I;
 ofstream Save1O;
@@ -26,7 +27,7 @@ void Engine::Battle(Enemy enemy)
     int escape;
     waitkey;
     resetColor();
-    while(enemy.hp > 0 && iPlayer.hp > 0)
+    while(enemy.hp > 0 && iPlayer.hp > 0 && escape != 1)
     {
         cls();
         setColor(2);
@@ -87,7 +88,6 @@ void Engine::Battle(Enemy enemy)
                 cout << "You successfully escaped.\n";
                 resetColor();
                 getch();
-                exit(0);
             }
             else
             {
@@ -143,22 +143,25 @@ void Engine::Battle(Enemy enemy)
         Start();
     }
     cls();
-    setColor(2);
-    cout << enemy.name << " dies.\n";
-    resetColor();
-    getch();
-    iPlayer.exp += enemy.exp;
-    setColor(14);
-    cout << "\n" << iPlayer.name << " gains " << enemy.exp << " exp points.\n\n"
-         << iPlayer.name << " recovers " << 2 * iPlayer.level << " health points.\n\n";
-    iPlayer.hp += (iPlayer.level * 2);
-    if(iPlayer.hp > iPlayer.maxHp)
-        iPlayer.hp = iPlayer.maxHp;
-    resetColor();
-    getch();
-    cls();
-    while(iPlayer.exp >= iPlayer.nextlevel)
-        PlayerUp();
+    if(escape != 1)
+    {
+        setColor(2);
+        cout << enemy.name << " dies.\n";
+        resetColor();
+        getch();
+        iPlayer.exp += enemy.exp;
+        setColor(14);
+        cout << "\n" << iPlayer.name << " gains " << enemy.exp << " exp points.\n\n"
+             << iPlayer.name << " recovers " << 2 * iPlayer.level << " health points.\n\n";
+        iPlayer.hp += (iPlayer.level * 2);
+        if(iPlayer.hp > iPlayer.maxHp)
+            iPlayer.hp = iPlayer.maxHp;
+        resetColor();
+        getch();
+        cls();
+        while(iPlayer.exp >= iPlayer.nextlevel)
+            PlayerUp();
+    }
 }
 
 void Engine::Battle(Dummy dummy)
@@ -172,7 +175,7 @@ void Engine::Battle(Dummy dummy)
     int escape;
     waitkey;
     resetColor();
-    while(dummy.hp > 0 && iPlayer.hp > 0)
+    while(dummy.hp > 0 && iPlayer.hp > 0 && escape != 1)
     {
         cls();
         setColor(2);
@@ -233,7 +236,7 @@ void Engine::Battle(Dummy dummy)
                 cout << "You successfully escaped.\n";
                 resetColor();
                 getch();
-                exit(0);
+                break;
             }
             else
             {
@@ -289,26 +292,30 @@ void Engine::Battle(Dummy dummy)
         exit(0);
     }
     cls();
-    setColor(2);
-    cout << dummy.name << " dies.\n";
-    resetColor();
-    getch();
-    iPlayer.exp += dummy.exp;
-    setColor(14);
-    cout << "\n" << iPlayer.name << " gains " << dummy.exp << " exp points.\n\n"
-         << iPlayer.name << " recovers " << 2 * iPlayer.level << " health points.\n\n";
-    iPlayer.hp += (iPlayer.level * 2);
-    if(iPlayer.hp > iPlayer.maxHp)
-        iPlayer.hp = iPlayer.maxHp;
-    resetColor();
-    getch();
-    cls();
-    while(iPlayer.exp >= iPlayer.nextlevel)
-        PlayerUp();
+    if(escape != 1)
+    {
+        setColor(2);
+        cout << dummy.name << " dies.\n";
+        resetColor();
+        getch();
+        iPlayer.exp += dummy.exp;
+        setColor(14);
+        cout << "\n" << iPlayer.name << " gains " << dummy.exp << " exp points.\n\n"
+             << iPlayer.name << " recovers " << 2 * iPlayer.level << " health points.\n\n";
+        iPlayer.hp += (iPlayer.level * 2);
+        if(iPlayer.hp > iPlayer.maxHp)
+            iPlayer.hp = iPlayer.maxHp;
+        resetColor();
+        getch();
+        cls();
+        while(iPlayer.exp >= iPlayer.nextlevel)
+            PlayerUp();
+    }
 }
 
 void Engine::Start()
 {
+    hidecursor();
     srand(time(NULL));
     saveDefaultColor();
     cls();
@@ -501,9 +508,9 @@ void Engine::TrainingZone2()
 	{
 	    Battle(iDummy);
 	    cls();
-	    cout << "Congratulations! Now wait for the next update!:D";
+	    cout << "Congratulations! You can now go wherever you want in this little map with random encounters.";
 	    getch();
-	    Start();
+	    Engine::UpdateDungeon(iLocation.Dungeon1);
 	}
 	else
         TrainingZone1();
@@ -568,6 +575,9 @@ void Engine::Load()
         break;
     case(2):
         Battle(iDummy);
+        break;
+    case(3):
+        Engine::UpdateDungeon(iLocation.Dungeon1);
         break;
     default:
         cout << "Error, couldn't find the " << iPlayer.actualZone << " zone.\n";
@@ -733,4 +743,43 @@ void Engine::Stats()
 	cout << "\tAttack points: " << iPlayer.atk << endl;
 	cout << "\tMagic points: " << iPlayer.mag << endl;
 	getch();
+}
+
+template <size_t rows, size_t columns>
+void Engine::UpdateDungeon(string (&iDungeon)[rows][columns])
+{
+    cls();
+    srand(time(NULL));
+    int encounter = 1;
+    iLocation.ShowMap(iDungeon);
+    locate(iPlayer.x, iPlayer.y);
+    cout << "P";
+    char key = getch();
+    switch (key)
+    {
+    case('a'):
+        if(iDungeon[iPlayer.x - 2][iPlayer.y - 1] == " ")
+            iPlayer.x--;
+        break;
+    case('s'):
+        if(iDungeon[iPlayer.x - 1][iPlayer.y] == " ")
+            iPlayer.y++;
+        break;
+    case('d'):
+        if(iDungeon[iPlayer.x][iPlayer.y - 1] == " ")
+            iPlayer.x++;
+        break;
+    case('w'):
+        if(iDungeon[iPlayer.x - 1][iPlayer.y - 2] == " ")
+            iPlayer.y--;
+        break;
+    default:
+        exit(0);
+        break;
+    }
+    cout.flush();
+    encounter = rand() % 8;
+    if(encounter)
+        Engine::Battle(rEnemy);
+    Engine::UpdateDungeon(iDungeon);
 }

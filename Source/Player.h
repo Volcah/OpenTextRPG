@@ -7,6 +7,6 @@ class Player
 public:
     std::string name, surname, playerclass;
 	int hp, atk, mag, exp, maxHp,
-        level, nextlevel, actualZone;
+        level, nextlevel, actualZone, x, y;
     Player();
 };

@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "Enemy.h"
 #include "Game.h"
+#include "Location.h"
 
 class Engine
 {
@@ -28,4 +29,6 @@ public:
     void TrainingZone1();
     void TrainingZone2();
     void TrainingZoneBattle();
+    template <size_t rows, size_t columns>
+    void UpdateDungeon(string (&iDungeon)[rows][columns]);
 };
