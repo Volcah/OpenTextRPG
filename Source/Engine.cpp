@@ -161,6 +161,7 @@ void Engine::Battle(Enemy enemy)
         cls();
         while(iPlayer.exp >= iPlayer.nextlevel)
             PlayerUp();
+        Save();
     }
 }
 
@@ -489,7 +490,7 @@ void Engine::TrainingZone1()
 		TrainingZone1();
         break;
     case(4):
-		cout << "Heh.\n";
+		TrainingZone1();
         break;
     default:
         TrainingZone1();
@@ -510,6 +511,7 @@ void Engine::TrainingZone2()
 	    cls();
 	    cout << "Congratulations! You can now go wherever you want in this little map with random encounters.";
 	    getch();
+	    iPlayer.actualZone = 3;
 	    Engine::UpdateDungeon(iLocation.Dungeon1);
 	}
 	else
@@ -750,7 +752,7 @@ void Engine::UpdateDungeon(string (&iDungeon)[rows][columns])
 {
     cls();
     srand(time(NULL));
-    int encounter = 1;
+    int encounter = rand() % 4;
     iLocation.ShowMap(iDungeon);
     locate(iPlayer.x, iPlayer.y);
     cout << "P";
@@ -760,26 +762,30 @@ void Engine::UpdateDungeon(string (&iDungeon)[rows][columns])
     case('a'):
         if(iDungeon[iPlayer.x - 2][iPlayer.y - 1] == " ")
             iPlayer.x--;
+            if(encounter == 1)
+                Battle(rEnemy);
         break;
     case('s'):
         if(iDungeon[iPlayer.x - 1][iPlayer.y] == " ")
             iPlayer.y++;
+            if(encounter == 1)
+                Battle(rEnemy);
         break;
     case('d'):
         if(iDungeon[iPlayer.x][iPlayer.y - 1] == " ")
             iPlayer.x++;
+            if(encounter == 1)
+                Battle(rEnemy);
         break;
     case('w'):
         if(iDungeon[iPlayer.x - 1][iPlayer.y - 2] == " ")
             iPlayer.y--;
+            if(encounter == 1)
+                Battle(rEnemy);
         break;
     default:
-        exit(0);
         break;
     }
     cout.flush();
-    encounter = rand() % 8;
-    if(encounter)
-        Engine::Battle(rEnemy);
-    Engine::UpdateDungeon(iDungeon);
+    UpdateDungeon(iDungeon);
 }
