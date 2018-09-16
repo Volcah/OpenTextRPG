@@ -1,20 +1,28 @@
 # OpenTextRPG
 
-An Open Source Text RPG, feel free to contribute!
-
 [![GitHub forks](https://img.shields.io/github/forks/FabioArdis/OpenTextRPG.svg)](https://github.com/FabioArdis/OpenTextRPG/network)
 [![GitHub stars](https://img.shields.io/github/stars/FabioArdis/OpenTextRPG.svg)](https://github.com/FabioArdis/OpenTextRPG/stargazers)
 [![GitHub issues](https://img.shields.io/github/issues/FabioArdis/OpenTextRPG.svg)](https://github.com/FabioArdis/OpenTextRPG/issues)
-[![GitHub license](https://img.shields.io/badge/license-AGPL-blue.svg)](https://raw.githubusercontent.com/FabioArdis/OpenTextRPG/master/LICENSE)
+[![GitHub license](https://img.shields.io/badge/license-AGPL-blue.svg)](https://raw.githubusercontent.com/FabioArdis/OpenTextRPG/master/LICENSE)  
 
-Actually 
-To-Do list:
+Welcome, and thanks for choosing Open Text RPG.  
+This is a work-in-progress game, that means that it is actually playable, but due to its early life, it can suffer from bugs and other problems. Found a bug or have any ideas? Please, create an Issue. Do you want to collaborate or simply fix a bug? Feel free to make a new Pull Request.
+
+# To-Do list:
 - [x] Multi-platform.
-- [ ] Save/Load system.
+- [x] Save/Load system.
 - [x] Inventory system.
-- [x] Wiki.
+- [x] Free-roaming system.
+- [x] Randomize battle system.
+- [ ] Wiki.
 
-Executables available now:
-
-
-[![Windows](/images/windows.png)](https://github.com/FabioArdis/OpenTextRPG/releases/download/0.2.1/OpenTextRPG-0.2.1-prerelease.exe)
+# How to compile
+In the 45th commit I added a Makefile. Just install GCC-G++ and write in your terminal 
+```bash
+make
+```
+ or 
+ ```bash
+ make all
+ ```
+  to compile Open Text RPG. A file called "OTRPG" should now appear in the folder you ran make.
