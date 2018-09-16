@@ -490,7 +490,7 @@ void Engine::TrainingZone1()
 		TrainingZone1();
         break;
     case(4):
-		TrainingZone2);
+		TrainingZone2();
         break;
     default:
         TrainingZone1();
