@@ -656,6 +656,7 @@ RLUTIL_INLINE const int getnum()
 			else
 			if (kDown & KEY_ZL)
 			return 3;
+			else
 			if (kDown & KEY_ZR)
 			return 4;
 			else 
