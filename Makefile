@@ -7,6 +7,8 @@ CC=g++
 
 PROGRAM_NAME=OTRPG
 
-all:
+linux:
 	$(CC) $(CFLAGS) $(SOURCE) -o $(PROGRAM_NAME)
 
+switch:
+	make -f Makefile.nx
