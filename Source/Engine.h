@@ -19,6 +19,7 @@ public:
     void Play();
     void Save();
     void Load();
+    void Pause();
     void PlayerUp();
     void Stats();
     void Magic(Enemy& enemy);

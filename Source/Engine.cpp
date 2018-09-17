@@ -377,7 +377,7 @@ void Engine::Start()
 void Engine::Play()
 {
 	int selection = 1;
-	
+
 	cls();
 	#ifndef __SWITCH__
     cout << "Choose a name.\n\n";
@@ -682,7 +682,7 @@ void Engine::Randomize()
 
 	cout << "Enemy's Health Points: " << rEnemy.hp << endl;
 	cout << "Enemy's Attack points: " << rEnemy.atk << endl;
-	
+
 	int selection;
 
 	#ifndef __SWITCH__
@@ -843,34 +843,69 @@ void Engine::UpdateDungeon(string (&iDungeon)[rows][columns])
     case('a'):
 	case('A'):
         if(iDungeon[iPlayer.x - 2][iPlayer.y - 1] == " ")
+        {
             iPlayer.x--;
             if(encounter == 1)
                 Battle(rEnemy);
+        }
         break;
     case('s'):
 	case('S'):
         if(iDungeon[iPlayer.x - 1][iPlayer.y] == " ")
+        {
             iPlayer.y++;
             if(encounter == 1)
                 Battle(rEnemy);
+        }
         break;
     case('d'):
 	case('D'):
         if(iDungeon[iPlayer.x][iPlayer.y - 1] == " ")
+        {
             iPlayer.x++;
             if(encounter == 1)
                 Battle(rEnemy);
+        }
         break;
     case('w'):
 	case('W'):
         if(iDungeon[iPlayer.x - 1][iPlayer.y - 2] == " ")
+        {
             iPlayer.y--;
             if(encounter == 1)
                 Battle(rEnemy);
+        }
+        break;
+    case('q'):
+    case('Q'):
+        Pause();
         break;
     default:
         break;
     }
     cout.flush();
     UpdateDungeon(iDungeon);
+}
+
+void Engine::Pause()
+{
+    cls();
+    int selection = 1;
+    cout << "Pause Menu\n\n1-Return\n2-Save\n3-Main Menu\n4-Exit Game\n\n";
+    cin >> selection;
+    switch(selection)
+    {
+    case(1):
+        break;
+    case(2):
+        Save();
+        break;
+    case(3):
+        Start();
+        break;
+    case(4):
+        exit(0);
+    default:
+        Pause();
+    }
 }
