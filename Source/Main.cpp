@@ -18,10 +18,13 @@ int main()
               << "editable for everyone, even for commercial purposes.\n"
               << "If you want to reuse the code, please include the LICENSE available "
               << "in the repo of this game. Thanks for the attention.";
+	
     getch();
     iEngine.Start();
+	
 	#ifdef __SWITCH__
 	gfxExit();
 	#endif
+	
     return 0;
 }
