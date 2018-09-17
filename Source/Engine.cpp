@@ -29,15 +29,21 @@ void Engine::Battle(Enemy enemy)
     resetColor();
     while(enemy.hp > 0 && iPlayer.hp > 0 && escape != 1)
     {
-        cls();
+		cls();
         setColor(2);
         cout << iPlayer.name << "'s life = " << iPlayer.hp << endl;
         setColor(4);
         cout << enemy.name << "'s life = " << enemy.hp << endl << endl;
         resetColor();
+		#ifndef __SWITCH__
         cout << "What's your next move?\n\t";
         cout << "1-Attack\n\t2-Magic\n\t3-Escape\n\t4-Inventory\n\n";
         cin >> selection;
+		#else
+		cout << "What's your next move?\n\t";
+        cout << "L-Attack\n\tR-Magic\n\tZL-Escape\n\tZR-Inventory\n\n";
+		selection = getnum();
+		#endif
         switch (selection)
         {
         case(1):
@@ -142,7 +148,7 @@ void Engine::Battle(Enemy enemy)
         getch();
         Start();
     }
-    cls();
+	cls();
     if(escape != 1)
     {
         setColor(2);
@@ -158,7 +164,7 @@ void Engine::Battle(Enemy enemy)
             iPlayer.hp = iPlayer.maxHp;
         resetColor();
         getch();
-        cls();
+		cls();
         while(iPlayer.exp >= iPlayer.nextlevel)
             PlayerUp();
         Save();
@@ -167,7 +173,7 @@ void Engine::Battle(Enemy enemy)
 
 void Engine::Battle(Dummy dummy)
 {
-    cls();
+	cls();
     dummy.hp = dummy.maxHp;
     setColor(5);
     cout << dummy.name << " appears!\n";
@@ -178,15 +184,20 @@ void Engine::Battle(Dummy dummy)
     resetColor();
     while(dummy.hp > 0 && iPlayer.hp > 0 && escape != 1)
     {
-        cls();
+		cls();
         setColor(2);
         cout << iPlayer.name << "'s life = " << iPlayer.hp << endl;
         setColor(4);
         cout << dummy.name << "'s life = " << dummy.hp << endl << endl;
         resetColor();
         cout << "What's your next move?\n\t";
+		#ifndef __SWITCH__
         cout << "1-Attack\n\t2-Magic\n\t3-Escape\n\t4-Inventory\n\n";
         cin >> selection;
+		#else
+		cout << "L-Attack\n\tR-Magic\n\tZL-Escape\n\tZR-Inventory\n\n";
+		selection = getnum();
+		#endif
         switch (selection)
         {
         case(1):
@@ -292,7 +303,7 @@ void Engine::Battle(Dummy dummy)
         getch();
         exit(0);
     }
-    cls();
+	cls();
     if(escape != 1)
     {
         setColor(2);
@@ -308,7 +319,7 @@ void Engine::Battle(Dummy dummy)
             iPlayer.hp = iPlayer.maxHp;
         resetColor();
         getch();
-        cls();
+		cls();
         while(iPlayer.exp >= iPlayer.nextlevel)
             PlayerUp();
     }
@@ -319,8 +330,9 @@ void Engine::Start()
     hidecursor();
     srand(time(NULL));
     saveDefaultColor();
-    cls();
+	cls();
     int selection = 1;
+	#ifndef __SWITCH__
 	cout << "Welcome to OpenTextRPG.\n\n";
 	cout << "Select an option.\n\n";
 	setColor(2);
@@ -330,6 +342,17 @@ void Engine::Start()
 	cout << "\t3-Load save file\n";
 	cout << "\t4-Exit\n\n";
 	cin >> selection;
+	#else
+	cout << "Welcome to OpenTextRPG.\n\n";
+	cout << "Select an option.\n\n";
+	setColor(2);
+	cout << "\tL-Play\n";
+	cout << "\tR-Random Battle\n";
+	resetColor();
+	cout << "\tZL-Load save file\n";
+	cout << "\tZR-Exit\n\n";
+	selection = getnum();
+	#endif
     switch(selection)
     {
     case(1):
@@ -353,8 +376,10 @@ void Engine::Start()
 
 void Engine::Play()
 {
-    cls();
-    int selection = 1;
+	int selection = 1;
+	
+	cls();
+	#ifndef __SWITCH__
     cout << "Choose a name.\n\n";
     cin.ignore();
     getline(cin, iPlayer.name);
@@ -363,6 +388,13 @@ void Engine::Play()
     cout << "\nSo, you are " << iPlayer.name << " " << iPlayer.surname << "?\n\n"
          << "Press 1 for yes, 0 for no.\n\n";
     cin >> selection;
+	#else
+	iPlayer.name = "Test";
+	iPlayer.surname = "STest";
+	cout << "\nSo, you are " << iPlayer.name << " " << iPlayer.surname << "?\n\n"
+         << "Press L for yes, R for no.\n\n";
+	selection = getnum();
+	#endif
     switch(selection)
     {
     case(1):
@@ -376,10 +408,15 @@ void Engine::Play()
 
 void Engine::ChooseClass()
 {
-    cls();
+	cls();
 	int selection = 1;
+	#ifndef __SWITCH__
 	cout << "Ok, now choose a class.\n\n\t1-Archer\n\t2-Knight\n\t3-Mage\n\t4-Warrior\n";
 	cin >> selection;
+	#else
+	cout << "Ok, now choose a class.\n\n\tL-Archer\n\tR-Knight\n\tZL-Mage\n\tZR-Warrior\n";
+	selection = getnum();
+	#endif
 	switch(selection)
 	{
     case(1):
@@ -415,8 +452,13 @@ void Engine::ChooseClass()
         break;
 	}
 	int confirm;
+	#ifndef __SWITCH__
 	cout << "\nSo, you are " << iPlayer.name << " " << iPlayer.surname << ", the " << iPlayer.playerclass << "?\n\nPress 1 for yes, 0 for no.\n\n";
 	cin >> confirm;
+	#else
+	cout << "\nSo, you are " << iPlayer.name << " " << iPlayer.surname << ", the " << iPlayer.playerclass << "?\n\nPress L for yes, R for no.\n\n";
+	confirm = getnum();
+	#endif
 	if(confirm)
         Summary();
     else
@@ -425,7 +467,7 @@ void Engine::ChooseClass()
 
 void Engine::Summary()
 {
-    cls();
+	cls();
 	int selection = 1;
 	cout << "This is a summary of your choices\n\nName: " << iPlayer.name << "\nSurname: " << iPlayer.surname;
 	setColor(14);
@@ -437,8 +479,13 @@ void Engine::Summary()
 	setColor(1);
 	cout << "\nMagic: " << iPlayer.mag << "\n\n";
 	resetColor();
+	#ifndef __SWITCH__
 	cout << "Do you want to edit something?\n\t1-Name and Surname\n\t2-Class\n\t3-Go ahead\n\t4-Main Menu\n\n";
 	cin >> selection;
+	#else
+	cout << "Do you want to edit something?\n\tL-Name and Surname\n\tR-Class\n\tZL-Go ahead\n\tZR-Main Menu\n\n";
+	selection = getnum();
+	#endif
 	switch (selection)
 	{
 	case(1):
@@ -462,29 +509,36 @@ void Engine::Summary()
 
 void Engine::TrainingZone1()
 {
-    cls();
+	cls();
     int selection = 1;
     cout << "Trainer\nWelcome to the Training Zone, I will teach you how to survive out of the safe\nzones.\n";
     getch();
-    cls();
+    #ifndef __SWITCH__
+	cls();
+	#endif
+	#ifndef __SWITCH__
     cout << "Trainer\nNow, tell me what do you want to learn, please.\n\t1-Attack\n\t2-Magic\n\t3-Special\n\t4-Nothing, thanks.\n";
     cin >> selection;
+	#else
+	cout << "Trainer\nNow, tell me what do you want to learn, please.\n\tL-Attack\n\tR-Magic\n\tZL-Special\n\tZR-Nothing, thanks.\n";
+	selection = getnum();
+	#endif
 	switch (selection)
 	{
     case(1):
-        cls();
+		cls();
 		cout << "Trainer\nWhen attacked by one or more enemies, you should give it right back to 'em.\nChoose Attack when the Battle Menu shows up";
 		getch();
 		TrainingZone1();
         break;
     case(2):
-        cls();
+		cls();
 		cout << "Trainer\nUnlike the Attack, the magic has multiple purposes. In fact, magic can\nserve to attack, but also to heal yourself or to confuse the enemy.";
 		getch();
 		TrainingZone1();
         break;
     case(3):
-        cls();
+		cls();
 		cout << "Trainer\nAs the name says, they are attacks/spells very powerful that can only be\nused once in battle.";
 		getch();
 		TrainingZone1();
@@ -500,15 +554,21 @@ void Engine::TrainingZone1()
 
 void Engine::TrainingZone2()
 {
-    cls();
+	cls();
 	int selection = 1;
+	#ifndef __SWITCH__
 	cout << "Trainer\nThis is a dummy, you can use it when you want to train your combat skills.\n"
          << "When you're ready, press 1 to start the battle, or press 0 to go back.\n";
 	cin >> selection;
+	#else
+	cout << "Trainer\nThis is a dummy, you can use it when you want to train your combat skills.\n"
+         << "When you're ready, press L to start the battle, or press R to go back.\n";
+	selection = getnum();
+	#endif
 	if (selection == 1)
 	{
 	    Battle(iDummy);
-	    cls();
+		cls();
 	    cout << "Congratulations! You can now go wherever you want in this little map with random encounters.";
 	    getch();
 	    iPlayer.actualZone = 3;
@@ -521,9 +581,14 @@ void Engine::TrainingZone2()
 void Engine::Save()
 {
     int selection = 0;
-    cls();
+	cls();
+	#ifndef __SWITCH__
     cout << "Do you want to save?\n1-Yes\n0-No\n";
     cin >> selection;
+	#else
+	cout << "Do you want to save?\nL-Yes\nR-No\n";
+    selection = getnum();
+	#endif
     if(selection)
     {
         Save1O.open("save1.txt");
@@ -592,7 +657,7 @@ void Engine::Load()
 
 void Engine::Randomize()
 {
-    cls();
+	cls();
 
     rEnemy.name = "Random Enemy";
     iPlayer.name = "Random Player";
@@ -617,10 +682,16 @@ void Engine::Randomize()
 
 	cout << "Enemy's Health Points: " << rEnemy.hp << endl;
 	cout << "Enemy's Attack points: " << rEnemy.atk << endl;
-
-	cout << "\nDo you want to:\n\t1-Continue\n\t2-Re-randomize\n\t3-Quit\n";
+	
 	int selection;
+
+	#ifndef __SWITCH__
+	cout << "\nDo you want to:\n\t1-Continue\n\t2-Re-randomize\n\t3-Quit\n";
 	cin >> selection;
+	#else
+	cout << "\nDo you want to:\n\tL-Continue\n\tR-Re-randomize\n\tZL-Quit\n";
+	selection = getnum();
+	#endif
 	switch(selection)
 	{
     case(1):
@@ -640,10 +711,15 @@ void Engine::Randomize()
 
 void Engine::Magic(Enemy& enemy)
 {
-    cls();
+	cls();
 	int selection = 1;
+	#ifndef __SWITCH__
 	cout << "Select a spell.\n\t1-Cure\n\t2-Fireball\n\t3-Exit\n";
 	cin >> selection;
+	#else
+	cout << "Select a spell.\n\tL-Cure\n\tR-Fireball\n\tZL-Exit\n";
+	selection = getnum();
+	#endif
 	switch (selection)
 	{
 	case(1):
@@ -671,10 +747,15 @@ void Engine::Magic(Enemy& enemy)
 
 void Engine::Magic(Dummy& mDummy)
 {
-    cls();
+	cls();
 	int selection = 1;
+	#ifndef __SWITCH__
 	cout << "Select a spell.\n\t1-Cure\n\t2-Fireball\n\t3-Exit\n";
 	cin >> selection;
+	#else
+	cout << "Select a spell.\n\tL-Cure\n\tR-Fireball\n\tZL-Exit\n";
+	selection = getnum();
+	#endif
 	switch (selection)
 	{
 	case(1):
@@ -760,24 +841,28 @@ void Engine::UpdateDungeon(string (&iDungeon)[rows][columns])
     switch (key)
     {
     case('a'):
+	case('A'):
         if(iDungeon[iPlayer.x - 2][iPlayer.y - 1] == " ")
             iPlayer.x--;
             if(encounter == 1)
                 Battle(rEnemy);
         break;
     case('s'):
+	case('S'):
         if(iDungeon[iPlayer.x - 1][iPlayer.y] == " ")
             iPlayer.y++;
             if(encounter == 1)
                 Battle(rEnemy);
         break;
     case('d'):
+	case('D'):
         if(iDungeon[iPlayer.x][iPlayer.y - 1] == " ")
             iPlayer.x++;
             if(encounter == 1)
                 Battle(rEnemy);
         break;
     case('w'):
+	case('W'):
         if(iDungeon[iPlayer.x - 1][iPlayer.y - 2] == " ")
             iPlayer.y--;
             if(encounter == 1)

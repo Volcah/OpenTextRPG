@@ -1,5 +1,14 @@
 #pragma once
 
+#ifdef __SWITCH__
+#ifdef __cplusplus
+#include <iostream>
+#endif
+#include <switch.h>
+#define sleep msleep
+#define usleep msleep
+#define getch sgetch
+#endif
 
 #if 0
 #define RLUTIL_USE_ANSI
@@ -37,12 +46,15 @@
 	#define getch _getch
 	#define kbhit _kbhit
 #else
-	#include <termios.h>
+#ifndef __SWITCH__
+	#include <sys/termios.h>
 	#include <unistd.h>
 	#include <sys/ioctl.h>
 	#include <sys/types.h>
 	#include <sys/time.h>
+#endif
 
+#ifndef __SWITCH__
 
 RLUTIL_INLINE int getch(void) {
 
@@ -56,7 +68,6 @@ RLUTIL_INLINE int getch(void) {
 	tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
 	return ch;
 }
-
 
 RLUTIL_INLINE int kbhit(void) {
 	static struct termios oldt, newt;
@@ -77,6 +88,7 @@ RLUTIL_INLINE int kbhit(void) {
 	tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
 	return cnt;
 }
+#endif
 #endif
 
 #ifndef gotoxy
@@ -210,68 +222,93 @@ enum {
 
 
 RLUTIL_INLINE int getkey(void) {
-	#ifndef _WIN32
-	int cnt = kbhit();
-	#endif
-	int k = getch();
-	switch(k) {
-		case 0: {
-			int kk;
-			switch (kk = getch()) {
-				case 71: return KEY_NUMPAD7;
-				case 72: return KEY_NUMPAD8;
-				case 73: return KEY_NUMPAD9;
-				case 75: return KEY_NUMPAD4;
-				case 77: return KEY_NUMPAD6;
-				case 79: return KEY_NUMPAD1;
-				case 80: return KEY_NUMPAD2;
-				case 81: return KEY_NUMPAD3;
-				case 82: return KEY_NUMPAD0;
-				case 83: return KEY_NUMDEL;
-				default: return kk-59+KEY_F1;
-			}}
-		case 224: {
-			int kk;
-			switch (kk = getch()) {
-				case 71: return KEY_HOME;
-				case 72: return KEY_UP;
-				case 73: return KEY_PGUP;
-				case 75: return KEY_LEFT;
-				case 77: return KEY_RIGHT;
-				case 79: return KEY_END;
-				case 80: return KEY_DOWN;
-				case 81: return KEY_PGDOWN;
-				case 82: return KEY_INSERT;
-				case 83: return KEY_DELETE;
-				default: return kk-123+KEY_F1;
-			}}
-		case 13: return KEY_ENTER;
-#ifdef _WIN32
-		case 27: return KEY_ESCAPE;
-#else
-		case 155:
-		case 27: {
+	#ifndef __SWITCH__
+		#ifndef _WIN32
+		int cnt = kbhit();
+		#endif
+		int k = getch();
+		switch(k) {
+			case 0: {
+				int kk;
+				switch (kk = getch()) {
+					case 71: return KEY_NUMPAD7;
+					case 72: return KEY_NUMPAD8;
+					case 73: return KEY_NUMPAD9;
+					case 75: return KEY_NUMPAD4;
+					case 77: return KEY_NUMPAD6;
+					case 79: return KEY_NUMPAD1;
+					case 80: return KEY_NUMPAD2;
+					case 81: return KEY_NUMPAD3;
+					case 82: return KEY_NUMPAD0;
+					case 83: return KEY_NUMDEL;
+					default: return kk-59+KEY_F1;
+				}}
+			case 224: {
+				int kk;
+				switch (kk = getch()) {
+					case 71: return KEY_HOME;
+					case 72: return KEY_UP;
+					case 73: return KEY_PGUP;
+					case 75: return KEY_LEFT;
+					case 77: return KEY_RIGHT;
+					case 79: return KEY_END;
+					case 80: return KEY_DOWN;
+					case 81: return KEY_PGDOWN;
+					case 82: return KEY_INSERT;
+					case 83: return KEY_DELETE;
+					default: return kk-123+KEY_F1;
+				}}
+			case 13: return KEY_ENTER;
+	#ifdef _WIN32
+			case 27: return KEY_ESCAPE;
+	#else
+			case 155:
+			case 27: {
 
-			if (cnt >= 3 && getch() == '[') {
-				switch (k = getch()) {
-					case 'A': return KEY_UP;
-					case 'B': return KEY_DOWN;
-					case 'C': return KEY_RIGHT;
-					case 'D': return KEY_LEFT;
-				}
-			} else return KEY_ESCAPE;
+				if (cnt >= 3 && getch() == '[') {
+					switch (k = getch()) {
+						case 'A': return KEY_UP;
+						case 'B': return KEY_DOWN;
+						case 'C': return KEY_RIGHT;
+						case 'D': return KEY_LEFT;
+					}
+				} else return KEY_ESCAPE;
+			}
+	#endif
+			default: return k;
 		}
-#endif
-		default: return k;
-	}
+	#else
+		u64 kDown;
+		do
+		{
+			hidScanInput();
+			kDown = hidKeysDown(CONTROLLER_P1_AUTO);
+			if (kDown & KEY_DUP)
+			return KEY_UP;
+			else
+			if (kDown & KEY_DLEFT)
+			return KEY_LEFT;
+			else
+			if (kDown & KEY_DRIGHT)
+			return KEY_RIGHT;
+			else
+			if (kDown & KEY_DDOWN)
+			return KEY_DOWN;
+			else
+			if (kDown & KEY_A)
+			return KEY_ENTER;
+			else
+			kDown = 0;
+		}while(kDown == 0);
+	#endif
 }
 
-
+#ifndef __SWITCH__
 RLUTIL_INLINE int nb_getch(void) {
 	if (kbhit()) return getch();
 	else return 0;
 }
-
+#endif
 
 RLUTIL_INLINE RLUTIL_STRING_T getANSIColor(const int c) {
 	switch (c) {
@@ -383,8 +420,15 @@ RLUTIL_INLINE void cls(void) {
 
 	SetConsoleCursorPosition(hConsole, coordScreen);
 #else
+#ifndef __SWITCH__
 	RLUTIL_PRINT(ANSI_CLS);
 	RLUTIL_PRINT(ANSI_CURSOR_HOME);
+#else
+	consoleClear();
+	gfxFlushBuffers();
+	gfxSwapBuffers();
+	gfxWaitForVsync();
+#endif
 #endif
 }
 
@@ -524,9 +568,11 @@ RLUTIL_INLINE int tcols(void) {
 
 
 #ifdef __cplusplus
+#ifndef __SWITCH__
 RLUTIL_INLINE void anykey() {
 	getch();
 }
+#endif
 
 template <class T> void anykey(const T& msg) {
 	RLUTIL_PRINT(msg);
@@ -535,7 +581,9 @@ RLUTIL_INLINE void anykey(RLUTIL_STRING_T msg) {
 	if (msg)
 		RLUTIL_PRINT(msg);
 #endif
+#ifndef __SWITCH__
 	getch();
+#endif
 }
 
 RLUTIL_INLINE void setConsoleTitle(RLUTIL_STRING_T title) {
@@ -563,5 +611,56 @@ struct CursorHider {
 	~CursorHider() { showcursor(); }
 };
 
+}
+#endif
+
+#ifdef __SWITCH__
+RLUTIL_INLINE const char sgetch()
+{
+	#ifdef __cplusplus
+	std::cout << "Press a D-PAD key";
+	#endif
+	u64 kDown = 0;
+		do
+		{
+			hidScanInput();
+			kDown = hidKeysDown(CONTROLLER_P1_AUTO);
+			if (kDown & KEY_DUP)
+			return 'W';
+			else
+			if (kDown & KEY_DLEFT)
+			return 'A';
+			else
+			if (kDown & KEY_DRIGHT)
+			return 'D';
+			else
+			if (kDown & KEY_DDOWN)
+			return 'S';
+			else
+			kDown = 0;
+		}while(kDown == 0);
+}
+
+RLUTIL_INLINE const int getnum()
+{
+	u64 kDown = 0;
+		do
+		{
+			hidScanInput();
+			kDown = hidKeysDown(CONTROLLER_P1_AUTO);
+			if (kDown & KEY_L)
+			return 1;
+			else
+			if (kDown & KEY_R)
+			return 2;
+			else
+			if (kDown & KEY_ZL)
+			return 3;
+			else
+			if (kDown & KEY_ZR)
+			return 4;
+			else 
+			kDown = 0;
+		}while(kDown == 0);
 }
 #endif
