@@ -1,5 +1,6 @@
 # OpenTextRPG
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/1b9161e04abb4cd3a385f824aed01eaa)](https://app.codacy.com/app/FabioArdis/OpenTextRPG?utm_source=github.com&utm_medium=referral&utm_content=FabioArdis/OpenTextRPG&utm_campaign=Badge_Grade_Dashboard)
 [![GitHub forks](https://img.shields.io/github/forks/FabioArdis/OpenTextRPG.svg)](https://github.com/FabioArdis/OpenTextRPG/network)
 [![GitHub stars](https://img.shields.io/github/stars/FabioArdis/OpenTextRPG.svg)](https://github.com/FabioArdis/OpenTextRPG/stargazers)
 [![GitHub issues](https://img.shields.io/github/issues/FabioArdis/OpenTextRPG.svg)](https://github.com/FabioArdis/OpenTextRPG/issues)
