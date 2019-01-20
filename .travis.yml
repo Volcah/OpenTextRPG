@@ -1,3 +1,40 @@
+
+addons:
+  apt:
+    packages:
+    - build-essential
+    - automake
+    - gcc-7
+    - g++-7
+    sources:
+- ubuntu-toolchain-r-test
 compiler: gcc
+dist: trusty
+install:
+- sudo ln -s /usr/bin/gcc-6 /usr/local/bin/gcc
+- sudo ln -s /usr/bin/g++-6 /usr/local/bin/g++
+- export CC=gcc-7
+- export CXX=g++-7
+- export DEVKITPRO=/opt/devkitpro
+- export DEVKITA64=/opt/devkitpro/devkitA6
 language: cpp
-script: make linux
+script:
+- gcc -v && g++ -v && cmake --version
+- wget https://github.com/devkitPro/pacman/releases/download/devkitpro-pacman-1.0.1/devkitpro-pacman.deb
+- sudo apt install ./devkitpro-pacman.deb
+- sudo dkp-pacman -Syyu --noconfirm
+- sudo dkp-pacman -S devkitA64 --noconfirm
+- sudo dkp-pacman -S libnx --noconfirm
+- sudo dkp-pacman -S switch-tools --noconfirm
+- make linux
+- make -f Makefile.nx
+sudo: true
+deploy:
+  file:
+    - "OTRPG"
+    - "OpenTextRPG.nro"
+  on:
+    repo: FabioArdis/OpenTextRPG
+    all_branches: true
+after_deploy:
+- ls
