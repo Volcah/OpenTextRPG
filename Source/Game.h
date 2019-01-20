@@ -644,23 +644,28 @@ RLUTIL_INLINE const int getnum()
 {
 	consoleUpdate(NULL);
 	u64 kDown = 0;
-		do
-		{
-			hidScanInput();
-			kDown = hidKeysDown(CONTROLLER_P1_AUTO);
-			if (kDown & KEY_L)
-			return 1;
+	do {
+		hidScanInput();
+		kDown = hidKeysDown(CONTROLLER_P1_AUTO);
+
+		if (kDown & KEY_PLUS) return 0;
+		else
+			if (kDown & KEY_L) return 1;
 			else
-			if (kDown & KEY_R)
-			return 2;
-			else
-			if (kDown & KEY_ZL)
-			return 3;
-			else
-			if (kDown & KEY_ZR)
-			return 4;
-			else 
-			kDown = 0;
-		}while(kDown == 0);
+				if (kDown & KEY_R) return 2;
+				else
+					if (kDown & KEY_ZL) return 3;
+					else
+						if (kDown & KEY_ZR) return 4;
+						else
+							if (kDown & KEY_DUP) return 5;
+							else
+								if (kDown & KEY_DLEFT) return 6;
+								else
+									if (kDown & KEY_DDOWN) return 7;
+									else
+										if (kDown & KEY_DRIGHT) return 8;
+
+	} while (1);
 }
 #endif
