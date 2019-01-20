@@ -1,12 +1,3 @@
-addons:
-  apt:
-    packages:
-    - build-essential
-    - automake
-    - gcc-7
-    - g++-7
-    sources:
-- ubuntu-toolchain-r-test
 compiler: gcc
 dist: trusty
 install:
@@ -28,12 +19,3 @@ script:
 - make linux
 - make -f Makefile.nx
 sudo: true
-deploy:
-  file:
-    - "OTRPG"
-    - "OpenTextRPG.nro"
-  on:
-    repo: FabioArdis/OpenTextRPG
-    all_branches: true
-after_deploy:
-- ls
