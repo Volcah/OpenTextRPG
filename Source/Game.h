@@ -620,6 +620,7 @@ RLUTIL_INLINE const char sgetch()
 	#ifdef __cplusplus
 	std::cout << "Press a D-PAD key";
 	#endif
+	consoleUpdate(NULL);
 	u64 kDown = 0;
 		do
 		{
@@ -643,6 +644,7 @@ RLUTIL_INLINE const char sgetch()
 
 RLUTIL_INLINE const int getnum()
 {
+	consoleUpdate(NULL);
 	u64 kDown = 0;
 		do
 		{
