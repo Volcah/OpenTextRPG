@@ -425,9 +425,7 @@ RLUTIL_INLINE void cls(void) {
 	RLUTIL_PRINT(ANSI_CURSOR_HOME);
 #else
 	consoleClear();
-	gfxFlushBuffers();
-	gfxSwapBuffers();
-	gfxWaitForVsync();
+	consoleUpdate(NULL);
 #endif
 #endif
 }
@@ -620,6 +618,7 @@ RLUTIL_INLINE const char sgetch()
 	#ifdef __cplusplus
 	std::cout << "Press a D-PAD key";
 	#endif
+	consoleUpdate(NULL);
 	u64 kDown = 0;
 		do
 		{
@@ -643,6 +642,7 @@ RLUTIL_INLINE const char sgetch()
 
 RLUTIL_INLINE const int getnum()
 {
+	consoleUpdate(NULL);
 	u64 kDown = 0;
 		do
 		{
