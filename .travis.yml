@@ -29,4 +29,12 @@ script:
 - make linux
 - make -f Makefile.nx
 sudo: true
-
+deploy:
+  file:
+    - "OTRPG"
+    - "OpenTextRPG.nro"
+  on:
+    repo: FabioArdis/OpenTextRPG
+    all_branches: true
+after_deploy:
+- ls
