@@ -22,6 +22,7 @@ int main()
     iEngine.Start();
 	
 	#ifdef __SWITCH__
+	consoleExit(NULL);
 	#endif
 	
     return 0;
