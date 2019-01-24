@@ -7,7 +7,6 @@ int main()
 {
 	
 	#ifdef __SWITCH__
-	gfxInitDefault();
 	consoleInit(NULL);
 	#endif
 	
@@ -23,7 +22,6 @@ int main()
     iEngine.Start();
 	
 	#ifdef __SWITCH__
-	gfxExit();
 	#endif
 	
     return 0;
