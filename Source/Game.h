@@ -26,6 +26,19 @@
 	#endif
 #endif
 
+#ifndef FIONREAD
+#ifndef _IOR(x,y,t)
+#ifndef IOCPARM_MASK
+#define IOCPARM_MASK 0x7f
+#endif
+#ifndef IOC_OUT
+#define IOC_OUT 0x40000000
+#endif
+#define _IOR(x,y,t)     (IOC_OUT|(((long)sizeof(t)&IOCPARM_MASK)<<16)|((x)<<8)|(y))
+#endif
+#define FIONREAD _IOR('f', 127, u_long)
+#endif
+
 #ifdef __cplusplus
 	#include <iostream>
 	#include <string>
