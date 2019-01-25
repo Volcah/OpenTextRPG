@@ -996,19 +996,19 @@ void Engine::Items()
     char key = getkey();
     switch(key)
     {
-    case KEY_ESCAPE:
+    case rlutil::KEY_ESCAPE:
         break;
-    case KEY_UP:
+    case rlutil::KEY_UP:
         if(ItemsListPosition > 1 && ItemsNum > 0)
             ItemsListPosition--;
         Engine::Items();
         break;
-    case KEY_DOWN:
+    case rlutil::KEY_DOWN:
         if(ItemsListPosition < ItemsNum && ItemsNum > 0)
             ItemsListPosition++;
         Engine::Items();
         break;
-    case KEY_ENTER:
+    case rlutil::KEY_ENTER:
         for(auto& itCure : iCure)
             if(itCure.position == ItemsListPosition)
             {
@@ -1027,7 +1027,6 @@ void Engine::Items()
                             if(itCure->num <= 0)
                             {
                                 itCure = iCure.erase(itCure);
-                                //cout << "Deleted\n";
                                 ItemsNum--;
                             }
                             else
