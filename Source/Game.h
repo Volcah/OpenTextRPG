@@ -651,6 +651,8 @@ RLUTIL_INLINE const char sgetch()
 }
 	
 RLUTIL_INLINE void switch_pause() {
+	
+	u64 kDown = 0;
 	std::cout << "Press A to continue" << std::endl;
 	do
 	{
