@@ -631,23 +631,23 @@ RLUTIL_INLINE const char sgetch()
 	consoleUpdate(NULL);
 	u64 kDown = 0;
 	do
-		{
-			hidScanInput();
-			kDown = hidKeysDown(CONTROLLER_P1_AUTO);
-			if (kDown & KEY_DUP)
-			return 'W';
-			else
-			if (kDown & KEY_DLEFT)
-			return 'A';
-			else
-			if (kDown & KEY_DRIGHT)
-			return 'D';
-			else
-			if (kDown & KEY_DDOWN)
-			return 'S';
-			else
-			kDown = 0;
-		}while(kDown == 0);
+	{
+		hidScanInput();
+		kDown = hidKeysDown(CONTROLLER_P1_AUTO);
+		if (kDown & KEY_DUP)
+		return 'W';
+		else
+		if (kDown & KEY_DLEFT)
+		return 'A';
+		else
+		if (kDown & KEY_DRIGHT)
+		return 'D';
+		else
+		if (kDown & KEY_DDOWN)
+		return 'S';
+		else
+		kDown = 0;
+	}while(kDown == 0);
 }
 	
 RLUTIL_INLINE void switch_pause() {
