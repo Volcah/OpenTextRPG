@@ -3,16 +3,20 @@
 #include <iostream>
 #include <ctime>
 #include <fstream>
+#include <vector>
+#include <iterator>
 
 #include "Player.h"
 #include "Enemy.h"
 #include "Game.h"
 #include "Location.h"
+#include "Item.h"
 
 class Engine
 {
 public:
     Engine();
+    void CreateItems();
     void Battle(Enemy enemy);
     void Battle(Dummy dummy);
     void Start();
@@ -24,6 +28,7 @@ public:
     void Stats();
     void Magic(Enemy& enemy);
     void Magic(Dummy& dummy);
+    void Items();
     void Randomize();
     void ChooseClass();
     void Summary();

@@ -10,9 +10,15 @@ Player iPlayer;
 Dummy iDummy;
 Enemy rEnemy;
 Location iLocation;
+Item vItem;
+Cure vCure("TestName", "TestDescription", 0, 0);
+vector<Item> iItem;
+vector<Cure> iCure;
 
 ifstream Save1I;
 ofstream Save1O;
+
+int ItemsListPosition = 1;
 
 Engine::Engine(){}
 
@@ -117,8 +123,24 @@ void Engine::Battle(Enemy enemy)
             }
             break;
         case(4):
-            cout << "Sorry, the inventory couldn't reach this version.\n";
-            getch();
+            Items();
+            enemyAttack = rand() % 2;
+            if(enemyAttack == 1 && enemy.hp > 0)
+            {
+                iPlayer.hp -= enemy.atk;
+                setColor(4);
+                cout << iPlayer.name << " takes " << enemy.atk << " damage!\n";
+                resetColor();
+                getch();
+            }
+            else
+            {
+                setColor(3);
+                cout << enemy.name << "'s attack missed!";
+                resetColor();
+                getch();
+            }
+            break;
             break;
         default:
             enemyAttack = rand() % 2;
@@ -272,8 +294,24 @@ void Engine::Battle(Dummy dummy)
             }
             break;
         case(4):
-            cout << "Sorry, the inventory couldn't reach this version.\nn";
-            getch();
+            Items();
+            dummyAttack = rand() % 2;
+            if(dummyAttack == 1 && dummy.hp > 0)
+            {
+                iPlayer.hp -= dummy.atk;
+                setColor(4);
+                cout << iPlayer.name << " takes " << dummy.atk << " damage!\n";
+                resetColor();
+                getch();
+            }
+            else
+            {
+                setColor(3);
+                cout << dummy.name << "'s attack missed!";
+                resetColor();
+                getch();
+            }
+            break;
             break;
         default:
             dummyAttack = rand() % 2;
@@ -659,6 +697,10 @@ void Engine::Randomize()
 {
 	cls();
 
+	iCure.clear();
+
+	CreateItems();
+
     rEnemy.name = "Random Enemy";
     iPlayer.name = "Random Player";
 
@@ -912,5 +954,100 @@ void Engine::Pause()
         exit(0);
     default:
         Pause();
+    }
+}
+
+void Engine::CreateItems()
+{
+    iCure.push_back(Cure("HP Restore Potion", "Normal HP Restore Potion.", 15, 20));
+    iCure.push_back(Cure("Great HP Restore Potion", "Great HP Restore Potion.", 25, 40));
+    auto itCure = iCure.begin();
+    itCure->position = 1;
+    itCure->num = 4;
+    itCure++;
+    itCure->position = 2;
+    itCure->num = 2;
+}
+
+void Engine::Items()
+{
+    cls();
+    int ItemsNum = 0;
+    cout << "Items:\n";
+    int selection = 1;
+    for(vector<Cure>::iterator itCure = iCure.begin(); itCure != iCure.end(); itCure++)
+    {
+        if(itCure->num <= 0)
+        {
+            itCure = iCure.erase(itCure);
+            ItemsNum--;
+        }
+        if(itCure->num > 0)
+        {
+            ++ItemsNum;
+            itCure->position = ItemsNum;
+            if(itCure->position == ItemsListPosition)
+                cout << ">" << itCure->name << " - " << itCure->num << endl;
+            else
+                cout << " " << itCure->name << " - " << itCure->num << endl;
+        }
+    }
+    cout << "\nSelect your item and press enter. Press Esc to exit.\n";
+    char key = getkey();
+    switch(key)
+    {
+    case rlutil::KEY_ESCAPE:
+        break;
+    case rlutil::KEY_UP:
+        if(ItemsListPosition > 1 && ItemsNum > 0)
+            ItemsListPosition--;
+        Engine::Items();
+        break;
+    case rlutil::KEY_DOWN:
+        if(ItemsListPosition < ItemsNum && ItemsNum > 0)
+            ItemsListPosition++;
+        Engine::Items();
+        break;
+    case rlutil::KEY_ENTER:
+        for(auto& itCure : iCure)
+            if(itCure.position == ItemsListPosition)
+            {
+                itCure.Show();
+		#ifndef __SWITCH__
+                cout << "\nDo you want to use it?\n1-Yes\n2-No\n";
+                cin >> selection;
+		#else
+		cout << "\nDo you want to use it?\nL-Yes\nR-No\n";
+                selection = getnum();
+		#endif
+                switch(selection)
+                {
+                case 1:
+                    if(itCure.num > 0)
+                    {
+                        itCure.Use(iPlayer);
+                        itCure.num--;
+                        for(vector<Cure>::iterator itCure = iCure.begin(); itCure != iCure.end();)
+                        {
+                            if(itCure->num <= 0)
+                            {
+                                itCure = iCure.erase(itCure);
+                                ItemsNum--;
+                            }
+                            else
+                            {
+                                itCure++;
+                            }
+                        }
+                        ItemsListPosition = 1;
+                    }
+                    getch();
+                    break;
+                default:
+                    Items();
+                    break;
+                }
+            }
+        break;
     }
 }
