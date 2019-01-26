@@ -1018,7 +1018,7 @@ void Engine::Items()
                 cin >> selection;
 		#else
 		cout << "\nDo you want to use it?\nL-Yes\nR-No\n";
-                cin >> selection;
+                selection = getnum();
 		#endif
                 switch(selection)
                 {
