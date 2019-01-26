@@ -233,8 +233,8 @@ enum {
 	KEY_NUMPAD9 = 135
 };
 
-#ifndef __SWITCH__
 RLUTIL_INLINE int getkey(void) {
+	#ifndef __SWITCH__
 		#ifndef _WIN32
 		int cnt = kbhit();
 		#endif
@@ -289,10 +289,7 @@ RLUTIL_INLINE int getkey(void) {
 	#endif
 			default: return k;
 		}
-}
-
-#else
-RLUTIL_INLINE int getkey(void) {
+	#else
 	u64 kDown;
 	do
 	{
@@ -317,6 +314,7 @@ RLUTIL_INLINE int getkey(void) {
 		return KEY_ESCAPE;
 	}while(1);
 #endif	
+}
 	
 #ifndef __SWITCH__
 RLUTIL_INLINE int nb_getch(void) {
