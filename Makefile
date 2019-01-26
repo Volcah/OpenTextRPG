@@ -1,7 +1,7 @@
 SOURCE=Source/Main.cpp Source/Enemy.cpp Source/Engine.cpp Source/Location.cpp Source/Player.cpp Source/Item.cpp
 OUTPUT=Main.o Enemy.o Engine.o Location.o Player.o Item.h
 
-CFLAGS=-g -std=c++11
+CFLAGS=-g -std=gnu++17
 LIBS=-lm
 CC=g++
 
