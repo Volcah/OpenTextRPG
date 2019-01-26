@@ -233,9 +233,8 @@ enum {
 	KEY_NUMPAD9 = 135
 };
 
-
+#ifndef __SWITCH__
 RLUTIL_INLINE int getkey(void) {
-	#ifndef __SWITCH__
 		#ifndef _WIN32
 		int cnt = kbhit();
 		#endif
@@ -290,7 +289,10 @@ RLUTIL_INLINE int getkey(void) {
 	#endif
 			default: return k;
 		}
-	#else
+}
+
+#else
+RLUTIL_INLINE int getkey(void)
 		u64 kDown;
 		do
 		{
@@ -311,11 +313,11 @@ RLUTIL_INLINE int getkey(void) {
 			if (kDown & KEY_A)
 			return KEY_ENTER;
 			else
-			kDown = 0;
-		}while(kDown == 0);
-	#endif
-}
-
+			if (kDown & KEY_B)
+			return KEY_ESCAPE;
+		}while(1);
+#endif	
+	
 #ifndef __SWITCH__
 RLUTIL_INLINE int nb_getch(void) {
 	if (kbhit()) return getch();
@@ -628,29 +630,15 @@ struct CursorHider {
 #ifdef __SWITCH__
 RLUTIL_INLINE const char sgetch()
 {
-	#ifdef __cplusplus
-	std::cout << "Press a D-PAD key";
-	#endif
 	consoleUpdate(NULL);
 	u64 kDown = 0;
-		do
-		{
-			hidScanInput();
-			kDown = hidKeysDown(CONTROLLER_P1_AUTO);
-			if (kDown & KEY_DUP)
-			return 'W';
-			else
-			if (kDown & KEY_DLEFT)
-			return 'A';
-			else
-			if (kDown & KEY_DRIGHT)
-			return 'D';
-			else
-			if (kDown & KEY_DDOWN)
-			return 'S';
-			else
-			kDown = 0;
-		}while(kDown == 0);
+	std::cout << "Press A to continue" << std::endl;
+	do
+	{
+		hidScanInput();
+		kDown = hidKeysDown(CONTROLLER_P1_AUTO);
+		if (kDown & KEY_A) return;
+	} while (1);
 }
 
 RLUTIL_INLINE const int getnum()
@@ -678,6 +666,10 @@ RLUTIL_INLINE const int getnum()
 									if (kDown & KEY_DDOWN) return 7;
 									else
 										if (kDown & KEY_DRIGHT) return 8;
+										else
+											if(kDown & KEY_X) return 9;
+											else
+												if(kDown & KEY_Y) return 10;
 
 	} while (1);
 }
