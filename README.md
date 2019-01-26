@@ -10,13 +10,8 @@
 Welcome, and thanks for choosing Open Text RPG.  
 This is a work-in-progress game, that means that it is actually playable, but due to its early life, it can suffer from bugs and other problems. Found a bug or have any ideas? Please, create an Issue. Do you want to collaborate or simply fix a bug? Feel free to make a new Pull Request.
 
-# To-Do list:
-- [x] Multi-platform.
-- [x] Save/Load system.
-- [x] Inventory system.
-- [x] Free-roaming system.
-- [x] Randomize battle system.
-- [ ] Wiki.
+# To-do list:
+I've set up a [Projects](https://github.com/FabioArdis/OpenTextRPG/projects) page, go check it up!
 
 # How to compile
 In the 45th commit I added a Makefile. Just install GCC-G++ and write in your terminal 
