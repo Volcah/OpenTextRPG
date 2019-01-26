@@ -626,7 +626,7 @@ struct CursorHider {
 #endif
 
 #ifdef __SWITCH__
-RLUTIL_INLINE const char sgetch()
+RLUTIL_INLINE void sgetch()
 {
 	consoleUpdate(NULL);
 	u64 kDown = 0;
