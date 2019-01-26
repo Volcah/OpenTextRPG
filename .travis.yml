@@ -1,6 +1,8 @@
 compiler: gcc
 dist: trusty
 install:
+- sudo apt install gcc -y
+- sudo apt install g++ -y
 - sudo ln -s /usr/bin/gcc-6 /usr/local/bin/gcc
 - sudo ln -s /usr/bin/g++-6 /usr/local/bin/g++
 - export CC=gcc-7
