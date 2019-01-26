@@ -292,30 +292,30 @@ RLUTIL_INLINE int getkey(void) {
 }
 
 #else
-RLUTIL_INLINE int getkey(void)
-		u64 kDown;
-		do
-		{
-			hidScanInput();
-			kDown = hidKeysDown(CONTROLLER_P1_AUTO);
-			if (kDown & KEY_DUP)
-			return KEY_UP;
-			else
-			if (kDown & KEY_DLEFT)
-			return KEY_LEFT;
-			else
-			if (kDown & KEY_DRIGHT)
-			return KEY_RIGHT;
-			else
-			if (kDown & KEY_DDOWN)
-			return KEY_DOWN;
-			else
-			if (kDown & KEY_A)
-			return KEY_ENTER;
-			else
-			if (kDown & KEY_B)
-			return KEY_ESCAPE;
-		}while(1);
+RLUTIL_INLINE int getkey(void) {
+	u64 kDown;
+	do
+	{
+		hidScanInput();
+		kDown = hidKeysDown(CONTROLLER_P1_AUTO);
+		if (kDown & KEY_DUP)
+		return KEY_UP;
+		else
+		if (kDown & KEY_DLEFT)
+		return KEY_LEFT;
+		else
+		if (kDown & KEY_DRIGHT)
+		return KEY_RIGHT;
+		else
+		if (kDown & KEY_DDOWN)
+		return KEY_DOWN;
+		else
+		if (kDown & KEY_A)
+		return KEY_ENTER;
+		else
+		if (kDown & KEY_B)
+		return KEY_ESCAPE;
+	}while(1);
 #endif	
 	
 #ifndef __SWITCH__
