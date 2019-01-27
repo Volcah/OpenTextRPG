@@ -1,8 +1,6 @@
 compiler: gcc
 dist: trusty
 install:
-- sudo apt install gcc -y
-- sudo apt install g++ -y
 - sudo ln -s /usr/bin/gcc-6 /usr/local/bin/gcc
 - sudo ln -s /usr/bin/g++-6 /usr/local/bin/g++
 - export CC=gcc-7
@@ -11,6 +9,10 @@ install:
 - export DEVKITA64=/opt/devkitpro/devkitA6
 language: cpp
 script:
+- sudo apt update -y --fix-missing
+- sudo apt upgrade -y --fix-missing
+- sudo apt install gcc -y --fix-missing
+- sudo apt install g++ -y --fix-missing
 - gcc -v && g++ -v && cmake --version
 - wget https://github.com/devkitPro/pacman/releases/download/devkitpro-pacman-1.0.1/devkitpro-pacman.deb
 - sudo apt install ./devkitpro-pacman.deb
