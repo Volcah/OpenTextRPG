@@ -1,3 +1,12 @@
+addons:
+  apt:
+    packages:
+    - build-essential
+    - automake
+    - gcc-7
+    - g++-7
+    sources:
+    - ubuntu-toolchain-r-test
 compiler: gcc
 dist: trusty
 install:
@@ -9,10 +18,6 @@ install:
 - export DEVKITA64=/opt/devkitpro/devkitA6
 language: cpp
 script:
-- sudo apt update -y --fix-missing
-- sudo apt upgrade -y --fix-missing
-- sudo apt install gcc -y --fix-missing
-- sudo apt install g++ -y --fix-missing
 - gcc -v && g++ -v && cmake --version
 - wget https://github.com/devkitPro/pacman/releases/download/devkitpro-pacman-1.0.1/devkitpro-pacman.deb
 - sudo apt install ./devkitpro-pacman.deb
@@ -23,3 +28,6 @@ script:
 - make linux
 - make -f Makefile.nx
 sudo: true
+  on:
+    repo: FabioArdis/OpenTextRPG
+    all_branches: true
