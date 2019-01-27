@@ -25,6 +25,6 @@ script:
 - sudo dkp-pacman -S devkitA64 --noconfirm
 - sudo dkp-pacman -S libnx --noconfirm
 - sudo dkp-pacman -S switch-tools --noconfirm
-- make linux
+- make
 - make -f Makefile.nx
 sudo: true
