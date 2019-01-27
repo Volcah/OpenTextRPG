@@ -28,6 +28,3 @@ script:
 - make linux
 - make -f Makefile.nx
 sudo: true
-  on:
-    repo: FabioArdis/OpenTextRPG
-    all_branches: true
