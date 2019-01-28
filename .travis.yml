@@ -1,3 +1,12 @@
+addons:
+  apt:
+    packages:
+    - build-essential
+    - automake
+    - gcc-7
+    - g++-7
+    sources:
+    - ubuntu-toolchain-r-test
 compiler: gcc
 dist: trusty
 install:
@@ -16,6 +25,8 @@ script:
 - sudo dkp-pacman -S devkitA64 --noconfirm
 - sudo dkp-pacman -S libnx --noconfirm
 - sudo dkp-pacman -S switch-tools --noconfirm
-- make linux
+- make
+- rm Source/*.o
+- rm Source/*.d
 - make -f Makefile.nx
 sudo: true
