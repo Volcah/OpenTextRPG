@@ -26,9 +26,9 @@ public:
 class Cure: public Item {
 public:
     Cure() = default;
-    explicit inline Cure(string newName, string newDescription, int newValue, int newCurePoints);
+    explicit inline Cure(string const& newName, string const& newDescription, int newValue, int newCurePoints);
     virtual compl Cure() = default;
     
-    int CurePoints;
+    int CurePoints = 0;
     void Use(Player player);
 };
