@@ -4,10 +4,11 @@
 
 using namespace std;
 
-class Location
-{
+class Location final {
 public:
-    Location();
+    Location() = default;
+    virtual compl Location() = default;
+    
     string Dungeon1[10][10];
     int* x;
     int* y;
