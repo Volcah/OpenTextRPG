@@ -12,10 +12,11 @@
 #include "Location.h"
 #include "Item.h"
 
-class Engine
-{
+class Engine final {
 public:
-    Engine();
+    Engine() = default;
+    virtual compl Engine() = default;
+    
     void CreateItems();
     void Battle(Enemy enemy);
     void Battle(Dummy dummy);
