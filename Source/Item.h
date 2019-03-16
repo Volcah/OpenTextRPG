@@ -11,8 +11,12 @@ public:
     Item() = default;
     virtual compl Item() = default;
     
-    string name, description;
-    int value, position, num, id;
+    string name = "ItemTest";
+    string description = "DescriptionTest";
+    int value = 10;
+    int position = 1;
+    int num = 1;
+    int id = 0;
     
     void Add(Item item);
     void Remove(Item item);
@@ -28,5 +32,3 @@ public:
     int CurePoints;
     void Use(Player player);
 };
-
-
