@@ -2,11 +2,13 @@
 
 #include <string>
 
-class Player
-{
+using namespace std;
+
+class Player final {
 public:
-    std::string name, surname, playerclass;
-	int hp, atk, mag, exp, maxHp,
-        level, nextlevel, actualZone, x, y;
-    Player();
+	Player() = default;
+	virtual compl Player() = default;
+	
+	string name, surname, playerclass;
+	int hp, atk, mag, exp, maxHp, level, nextlevel, actualZone, x, y;
 };
