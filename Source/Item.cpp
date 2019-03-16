@@ -19,7 +19,7 @@ void Item::Show() {
 
 }
 
-Cure::Cure(string newName, string newDescription, int newValue, int newCurePoints) {
+Cure::Cure(string const& newName, string const& newDescription, int newValue, int newCurePoints) {
     name = newName;
     description = newDescription;
     value = newValue;
