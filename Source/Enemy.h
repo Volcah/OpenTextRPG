@@ -2,17 +2,20 @@
 
 #include <string>
 
-class Enemy
-{
+using namespace std;
+
+class Enemy {
 public:
-    std::string name;
+	Enemy() = default;
+	virtual compl Enemy() = default;
+	
+	string name;
 	int hp, atk, mag, exp, maxHp, level;
-    Enemy();
 };
 
-class Dummy : public Enemy
-{
+class Dummy : public Enemy {
 public:
-    Dummy();
+	Dummy() = default;
+	virtual compl Dummy() = default;
 };
 
