@@ -402,8 +402,7 @@ void Engine::Play() {
 	}
 }
 
-void Engine::ChooseClass()
-{
+void Engine::ChooseClass() {
 	cls();
 	int selection = 1;
 	#ifndef __SWITCH__
