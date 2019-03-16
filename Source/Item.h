@@ -6,23 +6,27 @@
 
 using namespace std;
 
-class Item
-{
+class Item {
 public:
+    Item() = default;
+    virtual compl Item() = default;
+    
     string name, description;
     int value, position, num, id;
-    Item();
+    
     void Add(Item item);
     void Remove(Item item);
     void Show();
 };
 
-class Cure: public Item
-{
+class Cure: public Item {
 public:
+    Cure() = default;
+    explicit inline Cure(string newName, string newDescription, int newValue, int newCurePoints);
+    virtual compl Cure() = default;
+    
     int CurePoints;
     void Use(Player player);
-    Cure(string newName, string newDescription, int newValue, int newCurePoints);
 };
 
 
