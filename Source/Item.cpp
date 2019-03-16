@@ -1,16 +1,6 @@
 #include "Item.h"
 #include "Game.h"
 
-Item::Item()
-{
-    name = "ItemTest";
-    description = "DescriptionTest";
-    value = 10;
-    position = 1;
-    num = 1;
-    id = 0;
-}
-
 void Item::Add(Item item)
 {
     if(item.num < 10)
@@ -48,5 +38,3 @@ void Cure::Use(Player player)
     std::cout << player.name << " gained " << Cure::CurePoints << " HP.\n";
     std::cout << player.name << " HP = " << player.hp << std::endl;
 }
-
-
