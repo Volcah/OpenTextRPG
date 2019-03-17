@@ -1,7 +1,6 @@
 #include "Location.h"
 
-Location::Location()
-{
+Location::Location() {
     for(int x = 0; x < 10; x++) {
         Dungeon1[x][0] = "X";
     }
