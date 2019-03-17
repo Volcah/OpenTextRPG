@@ -10,7 +10,6 @@
 #include "Enemy.h"
 #include "Game.h"
 #include "Location.h"
-#include "Item.h"
 
 class Engine final {
 public:
