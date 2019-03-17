@@ -7,7 +7,7 @@ using namespace std;
 
 class Location final {
 public:
-    Location() = default;
+    Location();
     virtual compl Location() = default;
     
     string Dungeon1[10][10];
