@@ -14,7 +14,7 @@ public:
 	int maxHp = hp;
 	int atk = 20;
 	int mag = 20;
-	int exp = 25
+	int exp = 25;
 	int level = 1;
 };
 
