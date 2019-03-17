@@ -902,7 +902,7 @@ void Engine::Items() {
 	int ItemsNum = 0;
 	cout << "Items:\n";
 	int selection = 1;
-	for(vector<Cure>::iterator itCure = iCure.begin(); itCure != iCure.end(); itCure++) {
+	for(auto itCure : iCure) {
 		if(itCure->num <= 0) {
 			itCure = iCure.erase(itCure);
 			ItemsNum--;
