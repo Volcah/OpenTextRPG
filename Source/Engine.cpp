@@ -941,7 +941,7 @@ void Engine::Items() {
 				cout << "\nDo you want to use it?\n1-Yes\n2-No\n";
 				cin >> selection;
 		#else
-		cout << "\nDo you want to use it?\nL-Yes\nR-No\n";
+				cout << "\nDo you want to use it?\nL-Yes\nR-No\n";
 				selection = getnum();
 		#endif
 				switch(selection) {
