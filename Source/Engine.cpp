@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include "Item.h"
 
 #define waitkey rlutil::anykey("Press any button to continue...")
 
@@ -13,7 +14,10 @@ Location iLocation;
 Item vItem;
 Cure vCure("TestName", "TestDescription", 0, 0);
 vector<Item> iItem;
-vector<Cure> iCure;
+vector<Cure> iCure {
+	Cure("Great HP Restore Potion", "Great HP Restore Potion.", 25, 40),
+	Cure("HP Restore Potion", "Normal HP Restore Potion.", 15, 20),
+};
 
 ifstream Save1I;
 ofstream Save1O;
@@ -887,14 +891,10 @@ void Engine::Pause() {
 }
 
 void Engine::CreateItems() {
-	Cure NormalPotion {"HP Restore Potion", "Normal HP Restore Potion.", 15, 20};
-	Cure GreatPotion {"Great HP Restore Potion", "Great HP Restore Potion.", 25, 40};
-	iCure.push_back(NormalPotion);
-	iCure.push_back(GreatPotion);
 	auto itCure = iCure.begin();
 	itCure->position = 1;
 	itCure->num = 4;
-	itCure++;
+	++itCure;
 	itCure->position = 2;
 	itCure->num = 2;
 }
@@ -947,15 +947,15 @@ void Engine::Items() {
 				switch(selection) {
 				case 1:
 					if(itCure.num > 0) {
-						itCure.Use(iPlayer);
-						itCure.num--;
+						iPlayer.Use(itCure);
+						--itCure.num;
 						for(vector<Cure>::iterator itCure = iCure.begin(); itCure != iCure.end();) {
 							if(itCure->num <= 0) {
 								itCure = iCure.erase(itCure);
-								ItemsNum--;
+								--ItemsNum;
 							}
 							else {
-								itCure++;
+								++itCure;
 							}
 						}
 						ItemsListPosition = 1;

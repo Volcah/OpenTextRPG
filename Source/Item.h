@@ -2,7 +2,6 @@
 
 #include <string>
 #include <iostream>
-#include "Player.h"
 
 using namespace std;
 
@@ -26,9 +25,8 @@ public:
 class Cure: public Item {
 public:
     Cure() = default;
-    explicit inline Cure(string const& newName, string const& newDescription, int newValue, int newCurePoints);
+    explicit Cure(string const& newName, string const& newDescription, int newValue, int newCurePoints);
     virtual compl Cure() = default;
     
     int CurePoints = 0;
-    void Use(Player player);
 };

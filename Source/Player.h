@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include "Item.h"
 
 using namespace std;
 
@@ -22,4 +23,6 @@ public:
 	int actualZone = 1;
 	int x = 3;
 	int y = 3;
+	
+	void Use(Cure c);
 };
