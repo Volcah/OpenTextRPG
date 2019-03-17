@@ -887,8 +887,10 @@ void Engine::Pause() {
 }
 
 void Engine::CreateItems() {
-	iCure.push_back(Cure("HP Restore Potion", "Normal HP Restore Potion.", 15, 20));
-	iCure.push_back(Cure("Great HP Restore Potion", "Great HP Restore Potion.", 25, 40));
+	Cure NormalPotion {"HP Restore Potion", "Normal HP Restore Potion.", 15, 20};
+	Cure GreatPotion {"Great HP Restore Potion", "Great HP Restore Potion.", 25, 40};
+	iCure.push_back(NormalPotion);
+	iCure.push_back(GreatPotion);
 	auto itCure = iCure.begin();
 	itCure->position = 1;
 	itCure->num = 4;
