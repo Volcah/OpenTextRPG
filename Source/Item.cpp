@@ -20,7 +20,7 @@ void Item::Show() {
 	std::cout << "Value: " << value << std::endl;
 }
 
-explicit Cure::Cure(string const& newName, string const& newDescription, int newValue, int newCurePoints) {
+Cure::Cure(string const& newName, string const& newDescription, int newValue, int newCurePoints) {
 	name = newName;
 	description = newDescription;
 	value = newValue;
