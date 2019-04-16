@@ -7,20 +7,20 @@ using namespace std;
 
 using namespace rlutil;
 
-Player iPlayer;
-Dummy iDummy;
-Enemy rEnemy;
-Location iLocation;
-Item vItem;
+Player iPlayer{};
+Dummy iDummy{};
+Enemy rEnemy{};
+Location iLocation{}
+Item vItem{};
 Cure vCure("TestName", "TestDescription", 0, 0);
-vector<Item> iItem;
+vector<Item> iItem{};
 vector<Cure> iCure {
 	Cure("Great HP Restore Potion", "Great HP Restore Potion.", 25, 40),
 	Cure("HP Restore Potion", "Normal HP Restore Potion.", 15, 20),
 };
 
-ifstream Save1I;
-ofstream Save1O;
+ifstream Save1I{};
+ofstream Save1O{};
 
 int ItemsListPosition = 1;
 
@@ -329,7 +329,7 @@ void Engine::Battle(Dummy dummy) {
 	}
 }
 
-void Engine::Start() {
+void Engine::Start(void) {
 	hidecursor();
 	srand(time(NULL));
 	saveDefaultColor();
@@ -376,7 +376,7 @@ void Engine::Start() {
 	}
 }
 
-void Engine::Play() {
+void Engine::Play(void) {
 	int selection = 1;
 
 	cls();
@@ -406,7 +406,7 @@ void Engine::Play() {
 	}
 }
 
-void Engine::ChooseClass() {
+void Engine::ChooseClass(void) {
 	cls();
 	int selection = 1;
 	#ifndef __SWITCH__
@@ -465,7 +465,7 @@ void Engine::ChooseClass() {
 	}
 }
 
-void Engine::Summary() {
+void Engine::Summary(void) {
 	cls();
 	int selection = 1;
 	cout << "This is a summary of your choices\n\nName: " << iPlayer.name << "\nSurname: " << iPlayer.surname;
@@ -505,7 +505,7 @@ void Engine::Summary() {
 	}
 }
 
-void Engine::TrainingZone1() {
+void Engine::TrainingZone1(void) {
 	cls();
 	int selection = 1;
 	cout << "Trainer\nWelcome to the Training Zone, I will teach you how to survive out of the safe\nzones.\n";
@@ -548,7 +548,7 @@ void Engine::TrainingZone1() {
 	}
 }
 
-void Engine::TrainingZone2() {
+void Engine::TrainingZone2(void) {
 	cls();
 	int selection = 1;
 	#ifndef __SWITCH__
@@ -572,7 +572,7 @@ void Engine::TrainingZone2() {
 		TrainingZone1();
 }
 
-void Engine::Save() {
+void Engine::Save(void) {
 	int selection = 0;
 	cls();
 	#ifndef __SWITCH__
@@ -595,7 +595,7 @@ void Engine::Save() {
 	}
 }
 
-void Engine::Load() {
+void Engine::Load(void) {
 	string str;
 	cout << "Loading...\n";
 	Save1I.open("save1.txt");
@@ -645,7 +645,7 @@ void Engine::Load() {
 	waitkey;
 }
 
-void Engine::Randomize() {
+void Engine::Randomize(void) {
 	cls();
 
 	iCure.clear();
@@ -770,7 +770,7 @@ void Engine::Magic(Dummy& mDummy) {
 }
 
 
-void Engine::PlayerUp() {
+void Engine::PlayerUp(void) {
 	iPlayer.hp = iPlayer.maxHp;
 	iPlayer.level++;
 	iPlayer.nextlevel = iPlayer.nextlevel *= 2;
@@ -799,7 +799,7 @@ void Engine::PlayerUp() {
 	Stats();
 }
 
-void Engine::Stats() {
+void Engine::Stats(void) {
 	cout << iPlayer.name << " " << iPlayer.surname << "'s statistics." << endl;
 	cout << "\tClass: " << iPlayer.playerclass << endl;
 	cout << "\tLevel: " << iPlayer.level << endl;
@@ -864,7 +864,7 @@ void Engine::UpdateDungeon(string (&iDungeon)[rows][columns]) {
 	UpdateDungeon(iDungeon);
 }
 
-void Engine::Pause() {
+void Engine::Pause(void) {
 	cls();
 	int selection = 1;
 	#ifndef __SWITCH__
@@ -890,7 +890,7 @@ void Engine::Pause() {
 	}
 }
 
-void Engine::CreateItems() {
+void Engine::CreateItems(void) {
 	auto itCure = iCure.begin();
 	itCure->position = 1;
 	itCure->num = 4;
@@ -899,7 +899,7 @@ void Engine::CreateItems() {
 	itCure->num = 2;
 }
 
-void Engine::Items() {
+void Engine::Items(void) {
 	cls();
 	int ItemsNum = 0;
 	cout << "Items:\n";
