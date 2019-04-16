@@ -19,7 +19,7 @@ public:
     
     void Add(Item item);
     void Remove(Item item);
-    void Show();
+    void Show(void);
 };
 
 class Cure: public Item {
