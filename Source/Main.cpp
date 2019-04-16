@@ -1,6 +1,6 @@
 #include "Engine.h"
 
-Engine iEngine;
+Engine iEngine{};
 
 int main() {
 
