@@ -10,7 +10,7 @@ using namespace rlutil;
 Player iPlayer{};
 Dummy iDummy{};
 Enemy rEnemy{};
-Location iLocation{}
+Location iLocation{};
 Item vItem{};
 Cure vCure("TestName", "TestDescription", 0, 0);
 vector<Item> iItem{};
