@@ -13,7 +13,7 @@ void Item::Remove(Item item) {
     }
 }
 
-void Item::Show() {
+void Item::Show(void) {
 	rlutil::cls();
 	std::cout << "Name: " << name << std::endl;
 	std::cout << "Description: " << description << std::endl;
