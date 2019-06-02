@@ -2,14 +2,12 @@
 
 #include <string>
 
-using namespace std;
-
 class Enemy {
 public:
 	Enemy() = default;
 	virtual compl Enemy() = default;
 	
-	string name = "DefaultName";
+	std::string name = "DefaultName";
 	int hp = 50;
 	int maxHp = hp;
 	int atk = 20;

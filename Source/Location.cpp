@@ -13,7 +13,7 @@ Location::Location() {
         }
     }
     for(int j = 1; j < 10; j++) {
-        Dungeon1[x][9] = "X";
+        Dungeon1[j][9] = "X";
     }
     for(int i = 1; i < 10; i++) {
         Dungeon1[9][i] = "X";

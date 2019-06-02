@@ -1,3 +1,7 @@
+#include <ctime>
+#include <fstream>
+#include <vector>
+#include <iterator>
 #include "Engine.h"
 #include "Item.h"
 
@@ -31,7 +35,7 @@ void Engine::Battle(Enemy enemy) {
 	cout << enemy.name << " appears!\n";
 	int enemyAttack = 1;
 	int selection = 1;
-	int escape;
+	int escape = 0;
 	waitkey;
 	resetColor();
 	while(enemy.hp > 0 && iPlayer.hp > 0 && escape != 1) {
@@ -184,7 +188,7 @@ void Engine::Battle(Dummy dummy) {
 	cout << dummy.name << " appears!\n";
 	int dummyAttack = 1;
 	int selection = 1;
-	int escape;
+	int escape = 0;
 	waitkey;
 	resetColor();
 	while(dummy.hp > 0 && iPlayer.hp > 0 && escape != 1) {

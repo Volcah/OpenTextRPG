@@ -1,10 +1,6 @@
 #pragma once
 
 #include <iostream>
-#include <ctime>
-#include <fstream>
-#include <vector>
-#include <iterator>
 
 #include "Player.h"
 #include "Enemy.h"
@@ -34,7 +30,7 @@ public:
     void Summary(void);
     void TrainingZone1(void);
     void TrainingZone2(void);
-    void TrainingZoneBattle(void);
+    void TrainingZoneBattle(void) = delete;
     template <size_t rows, size_t columns>
     void UpdateDungeon(string (&iDungeon)[rows][columns]);
 };
